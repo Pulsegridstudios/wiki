@@ -6,3 +6,6 @@ url: http://pulsegridstudios.github.io/wiki
 
 aux_links:
   PulseGrid Studios: http://pulsegridstudios.github.io
+  
+search_enabled: true
+color_scheme: dark
