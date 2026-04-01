@@ -1,14 +1,42 @@
-title: Looped Operation Wiki
-description: Wiki for Looped Operation
+title: Looped Operations Wiki
+description: Official Operations Manual & Technical Documentation
 theme: just-the-docs
 
-url: http://pulsegridstudios.github.io/wiki
+url: https://pulsegridstudios.github.io/wiki
 
+# 🔗 Top right links
 aux_links:
-  PulseGrid Studios: http://pulsegridstudios.github.io
-  
-search_enabled: true
-color_scheme: dark
+  PulseGrid Studios: https://pulsegridstudios.github.io
+  Roblox Game: https://www.roblox.com/
 
+# 🔍 Search
+search_enabled: true
+search:
+  heading_level: 3
+  previews: 3
+  preview_words_before: 5
+  preview_words_after: 10
+
+# 🎨 Theme
+color_scheme: looped-dark
+
+# 🖼️ Branding
 logo: "/assets/images/loopedops.png"
 favicon_ico: "/assets/images/favicon.ico"
+
+# 🧭 Navigation
+nav_sort: case_sensitive
+nav_external_links:
+  - title: Report Issue
+    url: https://github.com/PulseGridStudios/wiki/issues
+
+# 📱 UI tweaks
+heading_anchors: true
+back_to_top: true
+back_to_top_text: "Back to top"
+
+# 📄 Footer
+footer_content: "© PulseGrid Studios — Looped Operations Control Systems Documentation"
+
+# 🧪 Extras
+enable_copy_code_button: true
