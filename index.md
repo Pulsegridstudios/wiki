@@ -1,35 +1,87 @@
 ---
 title: Home
-layout: home
+layout: default
+nav_order: 1
 ---
 
-This is a *bare-minimum* template to create a Jekyll site that uses the [Just the Docs] theme. You can easily set the created site to be published on [GitHub Pages] – the [README] file explains how to do that, along with other details.
+# 🏭 Looped Operations  
+### AGR Reactor Operations Manual
 
-If [Jekyll] is installed on your computer, you can also build and preview the created site *locally*. This lets you test changes before committing them, and avoids waiting for GitHub Pages.[^1] And you will be able to deploy your local build to a different platform than GitHub Pages.
+---
 
-More specifically, the created site:
+> ⚠️ **OFFICIAL NOTICE**  
+> This documentation is part of the operational systems for the Looped Operations facility.  
+> All procedures, systems, and controls described herein are to be followed in accordance with site protocols.
 
-- uses a gem-based approach, i.e. uses a `Gemfile` and loads the `just-the-docs` gem
-- uses the [GitHub Pages / Actions workflow] to build and publish the site on GitHub Pages
+---
 
-Other than that, you're free to customize sites that you create with this template, however you like. You can easily change the versions of `just-the-docs` and Jekyll it uses, as well as adding further plugins.
+## 🔷 Welcome
 
-[Browse our documentation][Just the Docs] to learn more about how to use this theme.
+Welcome to the **Looped Operations Wiki** — the official technical documentation and operator reference for all reactor systems, control interfaces, and plant procedures.
 
-To get started with creating a site, simply:
+This wiki is designed to provide:
 
-1. click "[use this template]" to create a GitHub repository
-2. go to Settings > Pages > Build and deployment > Source, and select GitHub Actions
+- 📘 **System Documentation** — Detailed breakdowns of all reactor and plant systems  
+- 🎛️ **Control Room Guides** — How to operate panels, switches, and displays  
+- ⚠️ **Emergency Procedures** — Step-by-step responses to critical events  
+- 🧪 **Operational Knowledge** — Understanding how the reactor behaves under different conditions  
 
-If you want to maintain your docs in the `docs` directory of an existing project repo, see [Hosting your docs from an existing project repo](https://github.com/just-the-docs/just-the-docs-template/blob/main/README.md#hosting-your-docs-from-an-existing-project-repo) in the template README.
+---
 
-----
+## ⚙️ Facility Overview
 
-[^1]: [It can take up to 10 minutes for changes to your site to publish after you push the changes to GitHub](https://docs.github.com/en/pages/setting-up-a-github-pages-site-with-jekyll/creating-a-github-pages-site-with-jekyll#creating-your-site).
+The Looped Operations facility is based around an **Advanced Gas-cooled Reactor (AGR)** system, requiring careful monitoring and control of:
 
-[Just the Docs]: https://just-the-docs.github.io/just-the-docs/
-[GitHub Pages]: https://docs.github.com/en/pages
-[README]: https://github.com/just-the-docs/just-the-docs-template/blob/main/README.md
-[Jekyll]: https://jekyllrb.com
-[GitHub Pages / Actions workflow]: https://github.blog/changelog/2022-07-27-github-pages-custom-github-actions-workflows-beta/
-[use this template]: https://github.com/just-the-docs/just-the-docs-template/generate
+- 🔥 Reactor thermal output  
+- 💨 Coolant flow and pressure  
+- ⚛️ Neutron flux and reactivity  
+- 💧 Water and steam systems  
+
+Operators are expected to maintain stable conditions at all times and respond appropriately to system deviations.
+
+---
+
+## 🚦 System Status (Example)
+
+| System            | Status |
+|------------------|--------|
+| Reactor Core     | 🟢 ONLINE |
+| Cooling System   | 🟢 STABLE |
+| Turbine Output   | 🟢 NOMINAL |
+| Safety Systems   | 🟢 ACTIVE |
+
+---
+
+## 📚 Getting Started
+
+New to the facility? Start here:
+
+- 👉 [Control Room Basics](pages/control-room-basics.md)  
+- 👉 [Reactor Startup Procedure](pages/startup.md)  
+- 👉 [Emergency SCRAM Guide](pages/scram.md)  
+
+---
+
+## 🧠 Operator Reminder
+
+> “There is no such thing as a small anomaly.”  
+> — Looped Operations Training Division
+
+---
+
+## ⚠️ Safety Notice
+
+Failure to follow proper operating procedures may result in:
+
+- Reactor instability  
+- System failure  
+- Or in extreme cases…  
+  **Spontaneous Thermal Enthusiasm**
+
+---
+
+## 🏢 About PulseGrid Studios
+
+Looped Operations is developed and maintained by **PulseGrid Studios**, focused on creating immersive and realistic technical simulation experiences on Roblox.
+
+---
