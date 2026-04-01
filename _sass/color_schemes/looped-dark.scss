@@ -113,35 +113,8 @@ h1, h2, h3 {
 
 
 
-// ==============================
-// 🧾 SITE TITLE 
-// ==============================
-
-.site-title {
-  color: #ffffff !important;
-  font-weight: 700;
-  text-decoration: none !important;
-  letter-spacing: 1px;
-}
-
 .site-title:hover {
   background: none !important;
   color: #ffffff !important;
   text-decoration: none !important;
-}
-
-// 🧾 Fix title layout
-.site-title {
-  white-space: normal;
-  line-height: 1.2;
-  max-width: 220px;
-  font-weight: 700;
-}
-
-.side-bar {
-  width: 280px;
-}
-
-.main {
-  margin-left: 280px;
 }

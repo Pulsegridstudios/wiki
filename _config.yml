@@ -2,7 +2,7 @@ title: Looped Operations Wiki
 description: Official Operations Manual & Technical Documentation
 theme: just-the-docs
 
-markdown: kramdown
+markdown: GFM
 
 url: https://pulsegridstudios.github.io/wiki
 
