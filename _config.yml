@@ -9,3 +9,6 @@ aux_links:
   
 search_enabled: true
 color_scheme: dark
+
+logo: "/assets/images/loopedops.png"
+favicon_ico: "/assets/images/favicon.ico"
