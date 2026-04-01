@@ -13,7 +13,7 @@ nav_order: 1
 > This wiki is currently under construction.  
 > Some procedures and systems may be incomplete or subject to change.
 
-> ⚠️ **OFFICIAL NOTICE**  
+> [!NOTE]
 > This documentation is part of the operational systems for the Looped Operations facility.  
 > All procedures, systems, and controls described herein are to be followed in accordance with site protocols.
 
