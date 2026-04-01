@@ -1,0 +1,887 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Wiki — Looped Operation | PulseGrid Studios</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;800;900&family=Share+Tech+Mono&family=JetBrains+Mono:wght@300;400;500&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#0b0f14;
+  --sidebar:#0f141a;
+  --panel:#11171f;
+  --panel2:#131a23;
+  --blue:#4da3ff;
+  --blue-dim:rgba(77,163,255,0.12);
+  --blue-glow:rgba(77,163,255,0.35);
+  --cyan:#00e5ff;
+  --green:#00ff9c;
+  --orange:#ff6b35;
+  --text:#e6edf3;
+  --muted:#6a8599;
+  --border:#1f2a35;
+  --border2:#263545;
+  --code-bg:#05080c;
+  --sidebar-w:280px;
+}
+
+html{scroll-behavior:smooth;height:100%}
+body{
+  font-family:'Rajdhani',sans-serif;
+  background:var(--bg);color:var(--text);
+  min-height:100vh;overflow-x:hidden;
+  cursor:default;
+}
+
+/* scanlines */
+body::after{
+  content:'';position:fixed;inset:0;pointer-events:none;z-index:9999;
+  background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,0.03) 2px,rgba(0,0,0,0.03) 4px);
+}
+
+/* ── SIDEBAR ─────────────────────────────── */
+.sidebar{
+  position:fixed;top:0;left:0;bottom:0;width:var(--sidebar-w);
+  background:var(--sidebar);border-right:1px solid var(--border);
+  z-index:200;display:flex;flex-direction:column;overflow:hidden;
+}
+
+.sidebar-header{
+  padding:1.4rem 1.4rem 1rem;
+  border-bottom:1px solid var(--border);flex-shrink:0;
+  position:relative;overflow:hidden;
+}
+.sidebar-header::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,transparent,var(--blue),transparent);
+}
+
+.site-title{
+  font-family:'Orbitron',monospace;font-weight:900;
+  font-size:0.85rem;letter-spacing:0.12em;color:#fff;
+  text-decoration:none;line-height:1.25;display:block;
+  text-shadow:0 0 12px rgba(77,163,255,0.4);
+}
+.site-title span{color:var(--blue)}
+.site-subtitle{
+  font-family:'Share Tech Mono',monospace;font-size:0.62rem;
+  letter-spacing:0.15em;color:var(--muted);margin-top:0.3rem;
+  text-transform:uppercase;
+}
+
+/* mini 3d canvas in sidebar header */
+#mini-canvas{
+  position:absolute;right:0;top:0;bottom:0;width:70px;opacity:0.4;
+}
+
+.search-wrap{padding:0.9rem 1.2rem;border-bottom:1px solid var(--border);flex-shrink:0}
+.search-box{
+  width:100%;background:var(--bg);border:1px solid var(--border2);
+  color:var(--text);font-family:'Share Tech Mono',monospace;font-size:0.75rem;
+  padding:0.5rem 0.8rem;letter-spacing:0.06em;outline:none;
+  transition:border-color 0.2s,box-shadow 0.2s;
+}
+.search-box:focus{border-color:var(--blue);box-shadow:0 0 0 2px rgba(77,163,255,0.15)}
+.search-box::placeholder{color:var(--muted)}
+
+.nav-scroll{flex:1;overflow-y:auto;padding:0.8rem 0}
+.nav-scroll::-webkit-scrollbar{width:3px}
+.nav-scroll::-webkit-scrollbar-track{background:transparent}
+.nav-scroll::-webkit-scrollbar-thumb{background:var(--border2);border-radius:2px}
+
+.nav-section-label{
+  font-family:'Share Tech Mono',monospace;font-size:0.6rem;
+  letter-spacing:0.2em;color:var(--muted);text-transform:uppercase;
+  padding:0.9rem 1.4rem 0.3rem;opacity:0.7;
+}
+.nav-item{
+  display:block;padding:0.42rem 1.4rem;
+  font-family:'Rajdhani',sans-serif;font-size:0.9rem;font-weight:500;
+  letter-spacing:0.04em;color:var(--muted);text-decoration:none;
+  transition:all 0.18s;border-left:2px solid transparent;position:relative;
+}
+.nav-item:hover{color:var(--text);background:rgba(77,163,255,0.06);border-left-color:rgba(77,163,255,0.4)}
+.nav-item.active{
+  color:#000;border-left-color:var(--blue);
+  background:linear-gradient(90deg,var(--blue) 0%,#dff4ff 100%);
+  font-weight:600;
+}
+.nav-item.sub{padding-left:2.2rem;font-size:0.85rem}
+
+.sidebar-footer{
+  padding:0.9rem 1.4rem;border-top:1px solid var(--border);flex-shrink:0;
+  display:flex;gap:0.6rem;
+}
+.sf-btn{
+  flex:1;font-family:'Share Tech Mono',monospace;font-size:0.62rem;
+  letter-spacing:0.08em;text-transform:uppercase;text-decoration:none;
+  padding:0.45rem 0.5rem;text-align:center;
+  border:1px solid var(--border2);color:var(--muted);
+  transition:all 0.18s;
+}
+.sf-btn:hover{border-color:var(--blue);color:var(--blue);background:var(--blue-dim)}
+.sf-btn.discord:hover{border-color:#5865F2;color:#5865F2;background:rgba(88,101,242,0.1)}
+
+/* ── MAIN ─────────────────────────────────── */
+.main{
+  margin-left:var(--sidebar-w);
+  min-height:100vh;
+  position:relative;
+}
+
+/* Hero 3D canvas fills top of main */
+#hero-canvas{
+  position:fixed;
+  top:0;left:var(--sidebar-w);right:0;
+  height:100vh;
+  z-index:0;
+  pointer-events:none;
+}
+.hero-fade{
+  position:fixed;
+  top:0;left:var(--sidebar-w);right:0;
+  height:100vh;z-index:1;pointer-events:none;
+  background:
+    radial-gradient(ellipse 70% 60% at 70% 40%, transparent 20%, rgba(11,15,20,0.55) 60%, rgba(11,15,20,0.97) 100%),
+    linear-gradient(to bottom, transparent 40%, rgba(11,15,20,0.98) 85%);
+}
+
+/* TOP NAV BAR */
+.topbar{
+  position:sticky;top:0;z-index:100;
+  background:rgba(11,15,20,0.88);backdrop-filter:blur(18px);
+  border-bottom:1px solid var(--border);
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0.8rem 2.5rem;
+}
+.topbar-breadcrumb{
+  display:flex;align-items:center;gap:0.5rem;
+  font-family:'Share Tech Mono',monospace;font-size:0.72rem;
+  letter-spacing:0.08em;color:var(--muted);
+}
+.topbar-breadcrumb a{color:var(--blue);text-decoration:none}
+.topbar-breadcrumb span{opacity:0.4}
+.topbar-right{display:flex;align-items:center;gap:1rem}
+.tb-badge{
+  font-family:'Share Tech Mono',monospace;font-size:0.62rem;
+  letter-spacing:0.12em;padding:0.3rem 0.8rem;text-transform:uppercase;
+  border:1px solid rgba(255,107,53,0.4);color:var(--orange);
+  background:rgba(255,107,53,0.06);
+}
+.tb-status{display:flex;align-items:center;gap:0.4rem;font-family:'Share Tech Mono',monospace;font-size:0.65rem;letter-spacing:0.1em;color:var(--muted)}
+.tb-dot{width:5px;height:5px;border-radius:50%;background:var(--orange);box-shadow:0 0 6px var(--orange);animation:blink 2s ease-in-out infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0.2}}
+
+/* ── CONTENT ──────────────────────────────── */
+.content{
+  position:relative;z-index:2;
+  padding:0 3rem 6rem;max-width:900px;
+}
+
+/* HERO BLOCK inside content */
+.wiki-hero{
+  padding:5rem 0 3.5rem;
+  position:relative;
+}
+.wh-eyebrow{
+  display:inline-flex;align-items:center;gap:0.6rem;
+  font-family:'Share Tech Mono',monospace;font-size:0.7rem;
+  letter-spacing:0.2em;color:var(--green);text-transform:uppercase;
+  margin-bottom:1.2rem;
+}
+.wh-dot{width:5px;height:5px;border-radius:50%;background:var(--green);box-shadow:0 0 8px var(--green);animation:blink 1.6s ease-in-out infinite}
+.wiki-hero h1{
+  font-family:'Orbitron',monospace;font-weight:900;
+  font-size:clamp(2.8rem,5vw,4.5rem);
+  line-height:0.95;letter-spacing:-0.01em;color:#fff;
+  text-transform:uppercase;margin-bottom:0.6rem;
+}
+.wiki-hero h1 .accent{
+  color:transparent;-webkit-text-stroke:1.5px var(--blue);
+  display:block;font-size:0.65em;letter-spacing:0.05em;
+}
+.wiki-hero-desc{
+  font-size:1.05rem;line-height:1.75;color:var(--muted);
+  max-width:560px;margin:1.2rem 0 2rem;font-weight:400;
+}
+.wiki-hero-desc strong{color:var(--blue);font-weight:500}
+.hero-chips{display:flex;flex-wrap:wrap;gap:0.5rem}
+.chip{
+  font-family:'Share Tech Mono',monospace;font-size:0.65rem;
+  letter-spacing:0.1em;text-transform:uppercase;
+  padding:0.3rem 0.75rem;border:1px solid var(--border2);color:var(--muted);
+  transition:all 0.2s;
+}
+.chip.blue{border-color:rgba(77,163,255,0.3);color:var(--blue);background:var(--blue-dim)}
+.chip.green{border-color:rgba(0,255,156,0.25);color:var(--green);background:rgba(0,255,156,0.06)}
+.chip.orange{border-color:rgba(255,107,53,0.3);color:var(--orange);background:rgba(255,107,53,0.06)}
+
+/* DIVIDER */
+.wiki-divider{
+  height:1px;background:linear-gradient(90deg,var(--blue) 0%,transparent 60%);
+  margin:2.5rem 0;opacity:0.3;
+}
+
+/* ALERT BOX */
+.alert{
+  border:1px solid rgba(77,163,255,0.25);background:rgba(77,163,255,0.05);
+  padding:1rem 1.2rem;margin:1.8rem 0;position:relative;
+  padding-left:1.6rem;
+}
+.alert::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--blue)}
+.alert.warn::before{background:var(--orange)}
+.alert.warn{border-color:rgba(255,107,53,0.25);background:rgba(255,107,53,0.05)}
+.alert-label{
+  font-family:'Share Tech Mono',monospace;font-size:0.65rem;
+  letter-spacing:0.15em;text-transform:uppercase;
+  color:var(--blue);margin-bottom:0.35rem;
+}
+.alert.warn .alert-label{color:var(--orange)}
+.alert p{font-size:0.92rem;line-height:1.7;color:var(--text)}
+
+/* H2 styled like wiki CSS */
+.content h2{
+  font-family:'Orbitron',monospace;font-weight:700;font-size:1.1rem;
+  letter-spacing:0.06em;color:var(--blue);
+  border-bottom:2px solid var(--blue);padding:6px 10px 8px;
+  border-radius:4px;margin:2.5rem 0 1.2rem;
+  text-shadow:0 0 12px rgba(77,163,255,0.35);
+  background:linear-gradient(90deg,rgba(77,163,255,0.07),transparent);
+  position:relative;overflow:hidden;
+}
+.content h2::after{
+  content:'';position:absolute;top:0;right:0;bottom:0;width:40px;
+  background:linear-gradient(to left,rgba(77,163,255,0.05),transparent);
+}
+
+.content h3{
+  font-family:'Rajdhani',sans-serif;font-weight:700;font-size:1rem;
+  letter-spacing:0.08em;color:#cfd8e3;margin:1.8rem 0 0.7rem;
+  text-transform:uppercase;display:flex;align-items:center;gap:0.5rem;
+}
+.content h3::before{content:'';width:12px;height:1px;background:#cfd8e3;display:inline-block}
+
+.content p{font-size:0.97rem;line-height:1.8;color:var(--text);margin-bottom:0.9rem;font-weight:400}
+.content a{color:var(--blue);text-decoration:none;border-bottom:1px solid rgba(77,163,255,0.3);transition:all 0.15s}
+.content a:hover{border-color:var(--blue);text-shadow:0 0 8px rgba(77,163,255,0.4)}
+
+/* STAT CARDS */
+.stat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);margin:1.8rem 0}
+.stat-card{background:var(--panel);padding:1.4rem 1.2rem;transition:background 0.2s;position:relative;overflow:hidden}
+.stat-card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--blue),transparent);opacity:0;transition:opacity 0.2s}
+.stat-card:hover{background:var(--panel2)}
+.stat-card:hover::before{opacity:1}
+.sc-val{
+  font-family:'Orbitron',monospace;font-weight:800;font-size:2rem;
+  color:var(--blue);text-shadow:0 0 15px rgba(77,163,255,0.4);
+  display:block;line-height:1;margin-bottom:0.3rem;
+}
+.sc-val.g{color:var(--green);text-shadow:0 0 15px rgba(0,255,156,0.3)}
+.sc-val.o{color:var(--orange);text-shadow:0 0 15px rgba(255,107,53,0.3)}
+.sc-lbl{font-family:'Share Tech Mono',monospace;font-size:0.65rem;letter-spacing:0.12em;color:var(--muted);text-transform:uppercase}
+.sc-sub{font-size:0.78rem;color:var(--muted);margin-top:0.3rem;font-weight:400}
+
+/* SYSTEM TABLE */
+.sys-table{width:100%;border-collapse:collapse;margin:1.2rem 0;font-size:0.88rem}
+.sys-table th{
+  font-family:'Share Tech Mono',monospace;font-size:0.65rem;
+  letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);
+  padding:0.6rem 1rem;text-align:left;
+  border-bottom:1px solid var(--border2);background:var(--panel);
+}
+.sys-table td{padding:0.7rem 1rem;border-bottom:1px solid rgba(31,42,53,0.6);color:var(--text);font-weight:400}
+.sys-table tr:hover td{background:rgba(77,163,255,0.04)}
+.sys-table .tag{
+  font-family:'Share Tech Mono',monospace;font-size:0.6rem;
+  letter-spacing:0.08em;padding:0.18rem 0.5rem;
+  border-radius:2px;text-transform:uppercase;
+}
+.tag-blue{background:var(--blue-dim);color:var(--blue);border:1px solid rgba(77,163,255,0.25)}
+.tag-green{background:rgba(0,255,156,0.07);color:var(--green);border:1px solid rgba(0,255,156,0.2)}
+.tag-orange{background:rgba(255,107,53,0.07);color:var(--orange);border:1px solid rgba(255,107,53,0.2)}
+.tag-gray{background:rgba(106,133,153,0.1);color:var(--muted);border:1px solid rgba(106,133,153,0.2)}
+
+/* CODE BLOCK */
+.code-block{
+  background:var(--code-bg);border:1px solid var(--border);
+  padding:0;margin:1.5rem 0;position:relative;overflow:hidden;
+}
+.code-header{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0.5rem 1rem;border-bottom:1px solid var(--border);
+  background:rgba(255,255,255,0.02);
+}
+.code-lang{font-family:'Share Tech Mono',monospace;font-size:0.62rem;letter-spacing:0.1em;color:var(--muted);text-transform:uppercase}
+.code-dots{display:flex;gap:4px}
+.code-dot{width:8px;height:8px;border-radius:50%}
+code{
+  font-family:'JetBrains Mono',monospace;font-size:0.82rem;
+  color:var(--green);line-height:1.7;display:block;padding:1rem 1.2rem;
+  overflow-x:auto;
+}
+code .kw{color:var(--blue)}
+code .cm{color:var(--muted)}
+code .st{color:#ffa657}
+code .nm{color:#f8f8f2}
+
+/* PROCESS STEPS */
+.steps{display:flex;flex-direction:column;gap:0;margin:1.5rem 0}
+.step{
+  display:flex;gap:1.2rem;padding:1.2rem 0;
+  border-bottom:1px solid rgba(31,42,53,0.5);
+  position:relative;
+}
+.step:last-child{border-bottom:none}
+.step-num{
+  font-family:'Orbitron',monospace;font-weight:800;font-size:0.85rem;
+  color:var(--blue);width:28px;height:28px;border:1px solid rgba(77,163,255,0.3);
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;
+  background:var(--blue-dim);margin-top:2px;
+}
+.step-body h4{font-family:'Rajdhani',sans-serif;font-weight:700;font-size:0.95rem;color:#fff;letter-spacing:0.04em;margin-bottom:0.25rem}
+.step-body p{font-size:0.88rem;line-height:1.65;color:var(--muted);margin:0;font-weight:400}
+
+/* REACTOR DIAGRAM */
+.reactor-diagram{
+  background:var(--panel);border:1px solid var(--border);
+  padding:1.5rem;margin:1.8rem 0;position:relative;overflow:hidden;
+}
+.reactor-diagram::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--blue),transparent)}
+.rd-header{
+  font-family:'Share Tech Mono',monospace;font-size:0.68rem;
+  letter-spacing:0.15em;color:var(--muted);text-transform:uppercase;
+  margin-bottom:1.2rem;display:flex;align-items:center;justify-content:space-between;
+}
+.rd-live{display:flex;align-items:center;gap:0.4rem;color:var(--green);font-size:0.62rem}
+.rd-live-dot{width:5px;height:5px;border-radius:50%;background:var(--green);box-shadow:0 0 6px var(--green);animation:blink 1s ease-in-out infinite}
+.bars{display:flex;flex-direction:column;gap:0.7rem}
+.bar-row{display:flex;align-items:center;gap:0.8rem}
+.bar-lbl{font-family:'Share Tech Mono',monospace;font-size:0.63rem;letter-spacing:0.07em;color:var(--muted);text-transform:uppercase;width:90px;flex-shrink:0}
+.bar-track{flex:1;height:3px;background:rgba(255,255,255,0.05)}
+.bar-fill{height:100%;background:var(--blue);box-shadow:0 0 6px rgba(77,163,255,0.5);animation:grow 1.4s ease both}
+.bar-fill.g{background:var(--green);box-shadow:0 0 6px rgba(0,255,156,0.4)}
+.bar-fill.o{background:var(--orange);box-shadow:0 0 6px rgba(255,107,53,0.4)}
+@keyframes grow{from{width:0!important}to{}}
+.bar-val{font-family:'Share Tech Mono',monospace;font-size:0.62rem;color:var(--blue);width:38px;text-align:right;flex-shrink:0}
+.bar-val.g{color:var(--green)}
+.bar-val.o{color:var(--orange)}
+
+/* COMING SOON SECTION */
+.coming-soon-block{
+  background:linear-gradient(135deg,var(--panel) 0%,rgba(77,163,255,0.04) 100%);
+  border:1px solid rgba(77,163,255,0.2);padding:2.5rem;margin:2rem 0;
+  text-align:center;position:relative;overflow:hidden;
+}
+.coming-soon-block::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--blue),transparent)}
+.coming-soon-block::after{content:'';position:absolute;bottom:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(77,163,255,0.3),transparent)}
+.cs-title{font-family:'Orbitron',monospace;font-weight:800;font-size:1.4rem;color:#fff;letter-spacing:0.06em;margin-bottom:0.5rem}
+.cs-desc{font-size:0.92rem;color:var(--muted);margin-bottom:1.5rem;line-height:1.7}
+.cs-actions{display:flex;gap:0.8rem;justify-content:center;flex-wrap:wrap}
+.cs-btn{
+  font-family:'Share Tech Mono',monospace;font-size:0.72rem;
+  letter-spacing:0.1em;text-transform:uppercase;text-decoration:none;
+  padding:0.7rem 1.6rem;transition:all 0.2s;
+  clip-path:polygon(8px 0%,100% 0%,calc(100% - 8px) 100%,0% 100%);
+}
+.cs-btn.primary{background:var(--blue);color:#000;font-weight:bold}
+.cs-btn.primary:hover{box-shadow:0 0 25px rgba(77,163,255,0.5);transform:translateY(-2px)}
+.cs-btn.secondary{background:transparent;color:var(--text);border:1px solid var(--border2)}
+.cs-btn.secondary:hover{border-color:var(--blue);color:var(--blue)}
+
+/* ── on-page TOC ──────────────────────────── */
+.toc{
+  background:var(--panel);border:1px solid var(--border);
+  padding:1.2rem 1.4rem;margin:0 0 2rem;
+}
+.toc-title{
+  font-family:'Share Tech Mono',monospace;font-size:0.65rem;
+  letter-spacing:0.15em;text-transform:uppercase;color:var(--muted);
+  margin-bottom:0.7rem;
+}
+.toc-list{list-style:none;display:flex;flex-direction:column;gap:0.25rem}
+.toc-list a{
+  font-size:0.85rem;color:var(--muted);text-decoration:none;
+  transition:color 0.15s;display:flex;align-items:center;gap:0.5rem;
+  font-weight:400;border-bottom:none;
+}
+.toc-list a::before{content:'//';font-family:'Share Tech Mono',monospace;font-size:0.6rem;color:var(--border2)}
+.toc-list a:hover{color:var(--blue)}
+
+/* footer */
+.wiki-footer{
+  position:relative;z-index:2;
+  border-top:1px solid var(--border);padding:1.5rem 3rem;
+  display:flex;align-items:center;justify-content:space-between;
+  margin-left:0;
+}
+.wf-left{font-family:'Share Tech Mono',monospace;font-size:0.62rem;letter-spacing:0.1em;color:var(--muted);text-transform:uppercase}
+.wf-links{display:flex;gap:1.2rem}
+.wf-links a{font-family:'Share Tech Mono',monospace;font-size:0.62rem;letter-spacing:0.1em;color:var(--muted);text-decoration:none;text-transform:uppercase;transition:color 0.15s}
+.wf-links a:hover{color:var(--blue)}
+
+@media(max-width:860px){
+  .sidebar{transform:translateX(-100%)}
+  .main{margin-left:0}
+  #hero-canvas,.hero-fade{left:0}
+  .content{padding:0 1.5rem 4rem}
+  .stat-grid{grid-template-columns:1fr}
+  .wiki-footer{flex-direction:column;gap:1rem;padding:1.5rem}
+}
+</style>
+</head>
+<body>
+
+<!-- SIDEBAR -->
+<aside class="sidebar">
+  <canvas id="mini-canvas"></canvas>
+  <div class="sidebar-header">
+    <a href="#" class="site-title">LOOPED<span>OP</span><br>WIKI</a>
+    <div class="site-subtitle">PulseGrid Studios</div>
+  </div>
+
+  <div class="search-wrap">
+    <input class="search-box" type="text" placeholder="Search wiki...">
+  </div>
+
+  <nav class="nav-scroll">
+    <div class="nav-section-label">Getting Started</div>
+    <a href="#overview" class="nav-item active">Overview</a>
+    <a href="#agr" class="nav-item">What is an AGR?</a>
+    <a href="#unit1" class="nav-item">Unit 1 — Reactor</a>
+
+    <div class="nav-section-label">Systems</div>
+    <a href="#coolant" class="nav-item">Coolant Loop</a>
+    <a href="#rods" class="nav-item sub">Control Rods</a>
+    <a href="#turbines" class="nav-item sub">Turbines</a>
+    <a href="#alarms" class="nav-item">Alarm Systems</a>
+
+    <div class="nav-section-label">Gameplay</div>
+    <a href="#roles" class="nav-item">Crew Roles</a>
+    <a href="#scenarios" class="nav-item">Emergency Events</a>
+    <a href="#progression" class="nav-item">Progression</a>
+
+    <div class="nav-section-label">Community</div>
+    <a href="https://discord.gg/hbsPmdzdyE" target="_blank" class="nav-item">Discord Server</a>
+    <a href="https://www.roblox.com/communities/33322553/PulseGrid-Studios" target="_blank" class="nav-item">Roblox Group</a>
+  </nav>
+
+  <div class="sidebar-footer">
+    <a href="https://discord.gg/hbsPmdzdyE" target="_blank" class="sf-btn discord">Discord</a>
+    <a href="https://www.roblox.com/communities/33322553/PulseGrid-Studios" target="_blank" class="sf-btn">Roblox</a>
+  </div>
+</aside>
+
+<!-- MAIN -->
+<div class="main">
+  <canvas id="hero-canvas"></canvas>
+  <div class="hero-fade"></div>
+
+  <!-- TOPBAR -->
+  <div class="topbar">
+    <div class="topbar-breadcrumb">
+      <a href="#">Wiki</a><span>/</span>
+      <span>Overview</span>
+    </div>
+    <div class="topbar-right">
+      <div class="tb-status"><div class="tb-dot"></div>In Development</div>
+      <div class="tb-badge">Coming Soon</div>
+    </div>
+  </div>
+
+  <!-- CONTENT -->
+  <div class="content">
+
+    <!-- HERO -->
+    <div class="wiki-hero" id="overview">
+      <div class="wh-eyebrow"><div class="wh-dot"></div>PulseGrid Studios — Roblox Simulation</div>
+      <h1>Looped<br><span class="accent">Operation</span></h1>
+      <p class="wiki-hero-desc">
+        A <strong>fully simulated Advanced Gas-cooled Reactor</strong> on Roblox.
+        Operate real control systems, manage crises, and keep the grid alive —
+        with one reactor unit and infinite responsibility.
+      </p>
+      <div class="hero-chips">
+        <span class="chip blue">AGR Simulation</span>
+        <span class="chip green">1 Unit Active</span>
+        <span class="chip orange">Game Unreleased</span>
+        <span class="chip">Multiplayer</span>
+        <span class="chip">Roblox</span>
+      </div>
+    </div>
+
+    <div class="wiki-divider"></div>
+
+    <div class="alert warn">
+      <div class="alert-label">Development Status</div>
+      <p>Looped Operation has <strong>not yet been released</strong>. This wiki documents systems currently in active development. Join the <a href="https://discord.gg/hbsPmdzdyE" target="_blank">Discord server</a> for real-time updates from PulseGrid Studios.</p>
+    </div>
+
+    <!-- TOC -->
+    <div class="toc">
+      <div class="toc-title">On this page</div>
+      <ul class="toc-list">
+        <li><a href="#overview">Overview</a></li>
+        <li><a href="#agr">What is an AGR?</a></li>
+        <li><a href="#unit1">Unit 1 — the reactor</a></li>
+        <li><a href="#systems">Core systems</a></li>
+        <li><a href="#roles">Crew roles</a></li>
+        <li><a href="#scenarios">Emergency scenarios</a></li>
+      </ul>
+    </div>
+
+    <!-- AGR SECTION -->
+    <h2 id="agr">What is an AGR?</h2>
+
+    <p>An <strong>Advanced Gas-cooled Reactor (AGR)</strong> is a type of nuclear reactor developed in the United Kingdom. It uses graphite as a neutron moderator and carbon dioxide gas as the coolant — a key design difference from more common water-cooled reactors.</p>
+
+    <h3>Key Design Features</h3>
+
+    <table class="sys-table">
+      <thead>
+        <tr>
+          <th>Component</th>
+          <th>Material / Type</th>
+          <th>Function</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Moderator</td>
+          <td>Graphite</td>
+          <td>Slows neutrons for fission</td>
+          <td><span class="tag tag-green">Simulated</span></td>
+        </tr>
+        <tr>
+          <td>Coolant</td>
+          <td>Carbon dioxide (CO₂)</td>
+          <td>Transfers heat to steam generators</td>
+          <td><span class="tag tag-green">Simulated</span></td>
+        </tr>
+        <tr>
+          <td>Fuel</td>
+          <td>Uranium oxide pellets</td>
+          <td>Fission energy source</td>
+          <td><span class="tag tag-blue">Planned</span></td>
+        </tr>
+        <tr>
+          <td>Fuel Cladding</td>
+          <td>Stainless steel</td>
+          <td>Contains fuel, resists heat</td>
+          <td><span class="tag tag-blue">Planned</span></td>
+        </tr>
+        <tr>
+          <td>Control Rods</td>
+          <td>Boron steel</td>
+          <td>Absorbs neutrons, controls power</td>
+          <td><span class="tag tag-green">Simulated</span></td>
+        </tr>
+        <tr>
+          <td>Pressure Vessel</td>
+          <td>Pre-stressed concrete</td>
+          <td>Contains reactor core</td>
+          <td><span class="tag tag-gray">Structural</span></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- UNIT 1 -->
+    <h2 id="unit1">Unit 1 — The Reactor</h2>
+
+    <p>Looped Operation currently features <strong>one operational reactor unit</strong>. Unit 1 is the sole station players will operate at launch. It contains a full set of interconnected systems — all of which can affect each other in real time.</p>
+
+    <div class="stat-grid">
+      <div class="stat-card">
+        <span class="sc-val">1</span>
+        <div class="sc-lbl">Reactor Unit</div>
+        <div class="sc-sub">Unit 1 — AGR Station</div>
+      </div>
+      <div class="stat-card">
+        <span class="sc-val g">6</span>
+        <div class="sc-lbl">Control Rod Banks</div>
+        <div class="sc-sub">Per unit, fully operable</div>
+      </div>
+      <div class="stat-card">
+        <span class="sc-val o">TBA</span>
+        <div class="sc-lbl">Release Date</div>
+        <div class="sc-sub">Follow Discord for updates</div>
+      </div>
+    </div>
+
+    <!-- LIVE TELEMETRY WIDGET -->
+    <div class="reactor-diagram" id="systems">
+      <div class="rd-header">
+        <span>Unit 1 — System Telemetry</span>
+        <span class="rd-live"><div class="rd-live-dot"></div>Demo readout</span>
+      </div>
+      <div class="bars">
+        <div class="bar-row"><span class="bar-lbl">Core Temp</span><div class="bar-track"><div class="bar-fill o" style="width:68%"></div></div><span class="bar-val o">680°C</span></div>
+        <div class="bar-row"><span class="bar-lbl">CO₂ Pressure</span><div class="bar-track"><div class="bar-fill" style="width:74%"></div></div><span class="bar-val">4.1 MPa</span></div>
+        <div class="bar-row"><span class="bar-lbl">Coolant Flow</span><div class="bar-track"><div class="bar-fill g" style="width:82%"></div></div><span class="bar-val g">82%</span></div>
+        <div class="bar-row"><span class="bar-lbl">Power Output</span><div class="bar-track"><div class="bar-fill" style="width:55%"></div></div><span class="bar-val">550 MW</span></div>
+        <div class="bar-row"><span class="bar-lbl">Rod Insertion</span><div class="bar-track"><div class="bar-fill o" style="width:38%"></div></div><span class="bar-val o">38%</span></div>
+      </div>
+    </div>
+
+    <h2 id="coolant">Coolant Loop</h2>
+
+    <p>The coolant loop is the circulatory system of the reactor. CO₂ gas is pumped through the graphite core at high pressure, absorbing heat from the fuel pins. It then travels to the steam generators where that heat boils water to drive turbines.</p>
+
+    <div class="alert">
+      <div class="alert-label">Gameplay Note</div>
+      <p>Players assigned to the <strong>Coolant Station</strong> must maintain CO₂ flow rate and pressure within safe bands. Deviating too far in either direction triggers cascading alarm events across other crew stations.</p>
+    </div>
+
+    <h3 id="rods">Control Rods</h3>
+    <p>Control rods are inserted into the reactor core to absorb neutrons and reduce the rate of fission. In Looped Operation, six control rod banks can be independently adjusted. Full insertion causes a SCRAM — an emergency shutdown.</p>
+
+    <div class="code-block">
+      <div class="code-header">
+        <span class="code-lang">System Log</span>
+        <div class="code-dots">
+          <div class="code-dot" style="background:#ff5f56"></div>
+          <div class="code-dot" style="background:#ffbd2e"></div>
+          <div class="code-dot" style="background:#27c93f"></div>
+        </div>
+      </div>
+      <code>[<span class="kw">12:04:33</span>] <span class="nm">ROD_BANK_3</span> insertion <span class="st">+12%</span> <span class="cm">// operator: crew_alpha</span>
+[<span class="kw">12:04:41</span>] <span class="nm">CORE_TEMP</span> delta <span class="st">-8°C</span> <span class="cm">// responding to rod change</span>
+[<span class="kw">12:05:02</span>] <span class="nm">ALARM_ZONE_B</span> <span class="st">CLEARED</span> <span class="cm">// temp stabilised</span>
+[<span class="kw">12:05:18</span>] <span class="nm">COOLANT_FLOW</span> rate <span class="st">84%</span> <span class="cm">// nominal</span></code>
+    </div>
+
+    <!-- ROLES -->
+    <h2 id="roles">Crew Roles</h2>
+    <p>Looped Operation is designed around teamwork. Each player takes a specific station, and no single player can run the reactor alone at full efficiency.</p>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">01</div>
+        <div class="step-body">
+          <h4>Reactor Operator</h4>
+          <p>Manages control rod positioning and monitors core neutron flux. Primary decision-maker for power adjustments and SCRAM calls.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">02</div>
+        <div class="step-body">
+          <h4>Coolant Engineer</h4>
+          <p>Controls CO₂ pump speed, gas pressure, and flow rate. Must respond to temperature changes signalled by the Reactor Operator.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">03</div>
+        <div class="step-body">
+          <h4>Turbine Operator</h4>
+          <p>Manages the steam turbines and grid output. Balances load demand with available thermal power from the reactor.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">04</div>
+        <div class="step-body">
+          <h4>Safety Officer</h4>
+          <p>Monitors alarm panels across all systems. First to identify anomalies and coordinate emergency response protocols.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- SCENARIOS -->
+    <h2 id="scenarios">Emergency Scenarios</h2>
+    <p>Dynamic events occur during gameplay shifts. Each scenario escalates in severity if not addressed promptly by the crew.</p>
+
+    <table class="sys-table">
+      <thead>
+        <tr><th>Event</th><th>System</th><th>Severity</th><th>Response Window</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Coolant Leak</td><td>Coolant Loop</td><td><span class="tag tag-orange">High</span></td><td>90 seconds</td></tr>
+        <tr><td>Rod Stall</td><td>Control Rods</td><td><span class="tag tag-blue">Medium</span></td><td>3 minutes</td></tr>
+        <tr><td>Turbine Trip</td><td>Turbines</td><td><span class="tag tag-blue">Medium</span></td><td>2 minutes</td></tr>
+        <tr><td>Core Overtemp</td><td>Reactor Core</td><td><span class="tag tag-orange">Critical</span></td><td>45 seconds</td></tr>
+        <tr><td>Grid Disconnect</td><td>Output</td><td><span class="tag tag-gray">Low</span></td><td>5 minutes</td></tr>
+        <tr><td>SCRAM Event</td><td>All Systems</td><td><span class="tag tag-orange">Emergency</span></td><td>Immediate</td></tr>
+      </tbody>
+    </table>
+
+    <!-- COMING SOON -->
+    <div class="coming-soon-block" id="progression">
+      <div class="cs-title">Game Not Yet Released</div>
+      <p class="cs-desc">Looped Operation is in active development by PulseGrid Studios. Join the Discord for dev updates, sneak peeks, and to help shape the game before it launches on Roblox.</p>
+      <div class="cs-actions">
+        <a href="https://discord.gg/hbsPmdzdyE" target="_blank" class="cs-btn primary">Join Discord Server</a>
+        <a href="https://www.roblox.com/communities/33322553/PulseGrid-Studios" target="_blank" class="cs-btn secondary">Roblox Community</a>
+      </div>
+    </div>
+
+  </div><!-- /content -->
+
+  <footer class="wiki-footer">
+    <div class="wf-left">&copy; 2025 PulseGrid Studios &mdash; Looped Operation Wiki</div>
+    <div class="wf-links">
+      <a href="https://discord.gg/hbsPmdzdyE" target="_blank">Discord</a>
+      <a href="https://www.roblox.com/communities/33322553/PulseGrid-Studios" target="_blank">Roblox</a>
+    </div>
+  </footer>
+</div><!-- /main -->
+
+<script>
+/* ────── HERO 3D REACTOR ────── */
+(function(){
+  var canvas=document.getElementById('hero-canvas');
+  if(!canvas||!window.THREE)return;
+  var W=window.innerWidth-280,H=window.innerHeight;
+  var renderer=new THREE.WebGLRenderer({canvas:canvas,antialias:true,alpha:true});
+  renderer.setPixelRatio(Math.min(devicePixelRatio,2));
+  renderer.setSize(W,H);
+  renderer.setClearColor(0x000000,0);
+
+  var scene=new THREE.Scene();
+  var camera=new THREE.PerspectiveCamera(50,W/H,0.1,200);
+  camera.position.set(0,1,13);
+  camera.lookAt(0,0,0);
+
+  var BLUE=0x4da3ff,CYAN=0x00e5ff,ORANGE=0xff6b35,GREEN=0x00ff9c;
+
+  // Vessel horizontal rings
+  for(var i=-2.5;i<=2.5;i+=0.5){
+    var rg=new THREE.RingGeometry(2.48,2.53,64);
+    var op=Math.abs(i)<0.6?0.45:0.15;
+    var rm=new THREE.MeshBasicMaterial({color:BLUE,transparent:true,opacity:op,side:THREE.DoubleSide});
+    var rm2=new THREE.Mesh(rg,rm);rm2.rotation.x=Math.PI/2;rm2.position.y=i;scene.add(rm2);
+  }
+  // vertical lines
+  for(var j=0;j<20;j++){
+    var ang=(j/20)*Math.PI*2;
+    var pts=[new THREE.Vector3(Math.cos(ang)*2.5,-2.6,Math.sin(ang)*2.5),new THREE.Vector3(Math.cos(ang)*2.5,2.6,Math.sin(ang)*2.5)];
+    var lg=new THREE.BufferGeometry().setFromPoints(pts);
+    scene.add(new THREE.Line(lg,new THREE.LineBasicMaterial({color:BLUE,transparent:true,opacity:0.07})));
+  }
+  // caps
+  [-2.6,2.6].forEach(function(y){
+    var cg=new THREE.CircleGeometry(2.5,64);
+    var cm=new THREE.MeshBasicMaterial({color:BLUE,transparent:true,opacity:0.05,side:THREE.DoubleSide});
+    var cv=new THREE.Mesh(cg,cm);cv.rotation.x=Math.PI/2;cv.position.y=y;scene.add(cv);
+    var crg=new THREE.RingGeometry(2.3,2.53,64);
+    var crm=new THREE.MeshBasicMaterial({color:BLUE,transparent:true,opacity:0.4,side:THREE.DoubleSide});
+    var cr=new THREE.Mesh(crg,crm);cr.rotation.x=Math.PI/2;cr.position.y=y;scene.add(cr);
+  });
+
+  // Core
+  var core=new THREE.Mesh(new THREE.SphereGeometry(0.72,32,32),new THREE.MeshBasicMaterial({color:BLUE,transparent:true,opacity:0.9}));
+  scene.add(core);
+  [1.1,1.55,2.0].forEach(function(s,i){
+    var g=new THREE.Mesh(new THREE.SphereGeometry(s,32,32),new THREE.MeshBasicMaterial({color:BLUE,transparent:true,opacity:0.05-i*0.01,side:THREE.BackSide}));
+    scene.add(g);
+  });
+
+  // Control rods — 6 rods
+  var rods=[];
+  for(var k=0;k<6;k++){
+    var ra=(k/6)*Math.PI*2,rr=1.35;
+    var rodm=new THREE.MeshBasicMaterial({color:k%2===0?BLUE:ORANGE,transparent:true,opacity:0.6});
+    var rod=new THREE.Mesh(new THREE.CylinderGeometry(0.042,0.042,4.8,8),rodm);
+    rod.position.set(Math.cos(ra)*rr,0,Math.sin(ra)*rr);
+    scene.add(rod);rods.push(rod);
+  }
+
+  // Orbit rings + particles
+  var orbitDots=[];
+  [{r:3.6,tilt:0.4,col:BLUE,sp:0.36,ry:0.3},{r:4.4,tilt:-0.52,col:ORANGE,sp:-0.21,ry:0.28},{r:5.2,tilt:1.0,col:CYAN,sp:0.15,ry:0.3}].forEach(function(d){
+    var crv=new THREE.EllipseCurve(0,0,d.r,d.r*d.ry,0,Math.PI*2,false,0);
+    var og=new THREE.BufferGeometry().setFromPoints(crv.getPoints(128));
+    var ol=new THREE.Line(og,new THREE.LineBasicMaterial({color:d.col,transparent:true,opacity:0.35}));
+    ol.rotation.x=d.tilt;scene.add(ol);
+    var dot=new THREE.Mesh(new THREE.SphereGeometry(0.065,8,8),new THREE.MeshBasicMaterial({color:d.col}));
+    dot.userData={r:d.r,tilt:d.tilt,ry:d.ry,sp:d.sp,ph:Math.random()*Math.PI*2};
+    scene.add(dot);orbitDots.push(dot);
+  });
+
+  // Outer structural ring
+  var outerR=new THREE.Mesh(new THREE.RingGeometry(3.9,4.05,64),new THREE.MeshBasicMaterial({color:BLUE,transparent:true,opacity:0.07,side:THREE.DoubleSide}));
+  outerR.rotation.x=Math.PI/2;scene.add(outerR);
+
+  // Particles
+  var pc=220,pp=new Float32Array(pc*3);
+  for(var p2=0;p2<pc*3;p2++)pp[p2]=(Math.random()-0.5)*24;
+  var pg=new THREE.BufferGeometry();pg.setAttribute('position',new THREE.BufferAttribute(pp,3));
+  scene.add(new THREE.Points(pg,new THREE.PointsMaterial({color:BLUE,size:0.042,transparent:true,opacity:0.2})));
+
+  var t=0,mx=0,my=0;
+  function animate(){
+    requestAnimationFrame(animate);t+=0.007;
+    scene.rotation.y=t*0.09;
+    var pulse=0.9+Math.sin(t*2.2)*0.1;
+    core.scale.setScalar(pulse);
+    core.material.opacity=0.6+Math.sin(t*2.2)*0.3;
+    rods.forEach(function(r,i){r.position.y=Math.sin(t*1.5+i*1.05)*0.32});
+    orbitDots.forEach(function(d){
+      var u=d.userData,a=t*u.sp*2+u.ph;
+      d.position.set(Math.cos(a)*u.r,Math.sin(a)*u.r*Math.sin(u.tilt)*0.5,Math.sin(a)*u.r*u.ry);
+    });
+    camera.position.x+=(mx-camera.position.x)*0.035;
+    camera.position.y+=(-my+1-camera.position.y)*0.035;
+    camera.lookAt(0,0,0);
+    renderer.render(scene,camera);
+  }
+  animate();
+
+  window.addEventListener('resize',function(){
+    W=window.innerWidth-280;H=window.innerHeight;
+    camera.aspect=W/H;camera.updateProjectionMatrix();
+    renderer.setSize(W,H);
+  });
+  document.addEventListener('mousemove',function(e){
+    mx=(e.clientX/window.innerWidth-0.5)*0.6;
+    my=(e.clientY/window.innerHeight-0.5)*0.3;
+  });
+})();
+
+/* ────── MINI SIDEBAR 3D ────── */
+(function(){
+  var canvas=document.getElementById('mini-canvas');
+  if(!canvas||!window.THREE)return;
+  var renderer=new THREE.WebGLRenderer({canvas:canvas,antialias:true,alpha:true});
+  renderer.setPixelRatio(Math.min(devicePixelRatio,2));
+  renderer.setSize(70,120);renderer.setClearColor(0,0);
+  var scene=new THREE.Scene();
+  var camera=new THREE.PerspectiveCamera(60,70/120,0.1,50);
+  camera.position.set(0,0,4);
+  var BLUE=0x4da3ff;
+  // mini core
+  var core=new THREE.Mesh(new THREE.SphereGeometry(0.4,16,16),new THREE.MeshBasicMaterial({color:BLUE,transparent:true,opacity:0.85}));
+  scene.add(core);
+  // mini rings
+  [0.7,1.0,1.3].forEach(function(r){
+    var rg=new THREE.RingGeometry(r-0.01,r+0.01,32);
+    var rm=new THREE.Mesh(rg,new THREE.MeshBasicMaterial({color:BLUE,transparent:true,opacity:0.3,side:THREE.DoubleSide}));
+    rm.rotation.x=Math.random()*Math.PI;rm.rotation.y=Math.random()*Math.PI;
+    scene.add(rm);
+  });
+  var t=0;
+  (function loop(){
+    requestAnimationFrame(loop);t+=0.012;
+    scene.rotation.y=t*0.5;scene.rotation.x=Math.sin(t*0.4)*0.3;
+    core.material.opacity=0.6+Math.sin(t*2.5)*0.3;
+    renderer.render(scene,camera);
+  })();
+})();
+
+/* ────── ACTIVE NAV on scroll ────── */
+var sections=document.querySelectorAll('[id]');
+var navItems=document.querySelectorAll('.nav-item');
+window.addEventListener('scroll',function(){
+  var y=window.scrollY+120;
+  sections.forEach(function(s){
+    if(y>=s.offsetTop&&y<s.offsetTop+s.offsetHeight){
+      navItems.forEach(function(n){
+        n.classList.toggle('active',n.getAttribute('href')==='#'+s.id);
+      });
+    }
+  });
+},{passive:true});
+</script>
+</body>
+</html>
