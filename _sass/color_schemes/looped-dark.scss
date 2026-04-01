@@ -52,3 +52,17 @@ $search-result-preview-color: #9aa7b3;
 .nav-list .nav-list-item .nav-list-link:hover {
     color: #000000 !important;   // 👈 black text on hover
 }
+
+//  Site title (Looped Operations Wiki)
+.site-title {
+    color: #ffffff !important;
+    font-weight: 700; // bold
+    text-decoration: none !important;
+}
+
+// Remove hover highlight from title
+.site-title:hover {
+    background: none !important;
+    color: #ffffff !important;
+    text-decoration: none !important;
+}
