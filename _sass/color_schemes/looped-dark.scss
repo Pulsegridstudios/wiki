@@ -1,91 +1,142 @@
-// 🌑 Base (control room dark)
+// ==============================
+// 🌑 BASE 
+// ==============================
+
 $body-background-color: #0b0f14;
 $sidebar-color: #0f141a;
-$nav-child-link-color: #9aa7b3;
 $search-background-color: #0f141a;
 
-//  Primary accent
-$link-color: #4da3ff;
-$btn-primary-color: #4da3ff;
-
-//  Status green
-$feedback-color: #4da3ff;
-
-//  Warning red
-$danger-color: #ff4d4f;
-
-//  Text
 $body-text-color: #e6edf3;
 $heading-color: #ffffff;
 
-// 📦 Code blocks
+$border-color: #1f2a35;
+
+// ==============================
+// 🔵 PRIMARY 
+// ==============================
+
+$link-color: #4da3ff;
+$btn-primary-color: #4da3ff;
+$feedback-color: #4da3ff;
+$nav-list-item-active-color: #4da3ff;
+
+// ==============================
+// 💻 CODE BLOCKS
+// ==============================
+
 $code-background-color: #05080c;
 $code-text-color: #00ff9c;
 
-// 🔲 Borders / subtle UI
-$border-color: #1f2a35;
+// ==============================
+// 🧾 HEADINGS 
+// ==============================
 
-// 🔆 Sidebar active item
-$nav-list-item-active-color: #3b8eea;
-
-// 🔍 Search highlight
-$search-result-preview-color: #9aa7b3;
-
-
-// 📸 Bigger logo
-.site-logo {
-    max-height: 80px;   // increase this (try 80–120px)
-    width: auto;
-}
-
-.site-header {
-    padding-top: 10px;
-    padding-bottom: 10px;
-}
-
-// Active sidebar item
-.nav-list .nav-list-item .nav-list-link.active {
-    color: #000000 !important;   // 👈 black text
-}
-
-// Hover state
-.nav-list .nav-list-item .nav-list-link:hover {
-    color: #000000 !important;   // 👈 black text on hover
-}
-
-//  Site title (Looped Operations Wiki)
-.site-title {
-    color: #ffffff !important;
-    font-weight: 700; // bold
-    text-decoration: none !important;
-}
-
-// Remove hover highlight from title
-.site-title:hover {
-    background: none !important;
-    color: #ffffff !important;
-    text-decoration: none !important;
-}
-
-// 🧾 Headings - make them pop
-h1, .text-alpha {
-  color: #ffffff;
+.main-content h1 {
+  color: #ffffff !important;
   font-weight: 700;
   letter-spacing: 1px;
 }
 
-h2, .text-beta {
-  color: #4da3ff; // your blue accent
-  font-weight: 600;
+.main-content h2 {
+  color: #4da3ff !important;
+  font-weight: 700;
   border-bottom: 2px solid #4da3ff;
   padding-bottom: 4px;
+  text-shadow: 0 0 6px rgba(77, 163, 255, 0.4);
+  background: linear-gradient(90deg, rgba(77,163,255,0.12), transparent);
+  padding: 6px 10px;
+  border-radius: 4px;
 }
 
-h3, .text-gamma {
-  color: #cfd8e3;
+.main-content h3,
+.main-content h4 {
+  color: #cfd8e3 !important;
   font-weight: 600;
 }
 
 h1, h2, h3 {
   margin-top: 1.5em;
+}
+
+// ==============================
+// 🧭 SIDEBAR 
+// ==============================
+
+.side-bar .nav-list .nav-list-item .nav-list-link.active {
+  background: linear-gradient(90deg, #4da3ff 0%, #dff4ff 100%) !important;
+  color: #000000 !important;
+  font-weight: 600;
+}
+
+.side-bar .nav-list .nav-list-item .nav-list-link:hover {
+  background: #4da3ff !important;
+  color: #000000 !important;
+}
+
+// Smooth transitions
+.side-bar .nav-list .nav-list-item .nav-list-link {
+  transition: all 0.2s ease;
+}
+
+// ==============================
+// 🔍 SEARCH 
+// ==============================
+
+.search-results {
+  background: #0f141a !important;
+}
+
+.search-results .search-result {
+  background: #11161d !important;
+  color: #e6edf3 !important;
+}
+
+.search-results .search-result:hover,
+.search-results .search-result.active {
+  background: #1a2330 !important;
+  color: #ffffff !important;
+}
+
+// Force readable text in search
+.search-results .search-result a,
+.search-results .search-result .search-result-title,
+.search-results .search-result .search-result-doc-title,
+.search-results .search-result .search-result-rel-url {
+  color: #e6edf3 !important;
+}
+
+.search-results .search-result:hover a,
+.search-results .search-result.active a,
+.search-results .search-result:hover .search-result-title,
+.search-results .search-result.active .search-result-title {
+  color: #ffffff !important;
+}
+
+// ==============================
+// 🖼️ LOGO SIZE
+// ==============================
+
+.site-logo {
+  max-height: 90px;
+  width: auto;
+}
+
+// ==============================
+// 🧾 SITE TITLE 
+// ==============================
+
+.site-title {
+  color: #ffffff !important;
+  font-weight: 700;
+  text-decoration: none !important;
+  letter-spacing: 1px;
+}
+
+.site-title:hover {
+  background: none !important;
+  color: #ffffff !important;
+  text-decoration: none !important;
+}
+
+
 }
