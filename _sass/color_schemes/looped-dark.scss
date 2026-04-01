@@ -4,17 +4,17 @@ $sidebar-color: #0f141a;
 $nav-child-link-color: #9aa7b3;
 $search-background-color: #0f141a;
 
-// 🟠 Primary accent (reactor amber)
-$link-color: #ff9f1c;
-$btn-primary-color: #ff9f1c;
+//  Primary accent (reactor amber)
+$link-color: #4da3ff;
+$btn-primary-color: #4da3ff;
 
-// 🟢 Status green (success / online)
-$feedback-color: #2ec27e;
+//  Status green (success / online)
+$feedback-color: #4da3ff;
 
-// 🔴 Warning red (alarms)
+//  Warning red (alarms)
 $danger-color: #ff4d4f;
 
-// ⚪ Text
+//  Text
 $body-text-color: #e6edf3;
 $heading-color: #ffffff;
 
@@ -26,7 +26,19 @@ $code-text-color: #00ff9c;
 $border-color: #1f2a35;
 
 // 🔆 Sidebar active item
-$nav-list-item-active-color: #ff9f1c;
+$nav-list-item-active-color: #4da3ff;
 
 // 🔍 Search highlight
 $search-result-preview-color: #9aa7b3;
+
+
+// 📸 Bigger logo
+.site-logo {
+    max-height: 80px;   // increase this (try 80–120px)
+    width: auto;
+}
+
+.site-header {
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
