@@ -1,7 +1,7 @@
 ---
 title: Startup Guide
 layout: default
-nav_order: 1
+nav_order: 4
 ---
 
 # 🏭 Looped Operations  
@@ -9,5 +9,6 @@ nav_order: 1
 
 ---
 
-> [!IMPORTANT]  
-> This Wiki is Currently under construction.
+> ⚠️ **IMPORTANT NOTICE**  
+> This wiki is currently under construction.  
+> Some procedures and systems may be incomplete or subject to change.

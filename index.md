@@ -9,8 +9,9 @@ nav_order: 1
 
 ---
 
-> [!IMPORTANT]  
-> This Wiki is Currently under construction.
+> ⚠️ **IMPORTANT NOTICE**  
+> This wiki is currently under construction.  
+> Some procedures and systems may be incomplete or subject to change.
 
 > ⚠️ **OFFICIAL NOTICE**  
 > This documentation is part of the operational systems for the Looped Operations facility.  
@@ -49,9 +50,9 @@ Operators are expected to maintain stable conditions at all times and respond ap
 
 New to the facility? Start here:
 
-- 👉 [Control Room Basics](pages/control-room-basics.md)  
-- 👉 [Reactor Startup Procedure](pages/startup.md)  
-- 👉 [Emergency SCRAM Guide](pages/scram.md)  
+- 👉 [Control Room Basics](pages/control-room-basics)  
+- 👉 [Reactor Startup Procedure](pages/startup)  
+- 👉 [Emergency SCRAM Guide](pages/scram)  
 
 ---
 
