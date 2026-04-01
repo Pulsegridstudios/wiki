@@ -9,6 +9,6 @@ nav_order: 3
 
 ---
 
-> ⚠️ **IMPORTANT NOTICE**  
+> [!CAUTION]
 > This wiki is currently under construction.  
 > Some procedures and systems may be incomplete or subject to change.
