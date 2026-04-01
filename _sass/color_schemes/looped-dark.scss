@@ -4,21 +4,21 @@ $sidebar-color: #0f141a;
 $nav-child-link-color: #9aa7b3;
 $search-background-color: #0f141a;
 
-//  Primary accent (reactor amber)
+//  Primary accent
 $link-color: #4da3ff;
 $btn-primary-color: #4da3ff;
 
-//  Status green (success / online)
+//  Status green
 $feedback-color: #4da3ff;
 
-//  Warning red (alarms)
+//  Warning red
 $danger-color: #ff4d4f;
 
 //  Text
 $body-text-color: #e6edf3;
 $heading-color: #ffffff;
 
-// 📦 Code blocks (terminal feel)
+// 📦 Code blocks
 $code-background-color: #05080c;
 $code-text-color: #00ff9c;
 
@@ -26,7 +26,7 @@ $code-text-color: #00ff9c;
 $border-color: #1f2a35;
 
 // 🔆 Sidebar active item
-$nav-list-item-active-color: #4da3ff;
+$nav-list-item-active-color: #3b8eea;
 
 // 🔍 Search highlight
 $search-result-preview-color: #9aa7b3;
@@ -41,4 +41,14 @@ $search-result-preview-color: #9aa7b3;
 .site-header {
     padding-top: 10px;
     padding-bottom: 10px;
+}
+
+// Active sidebar item
+.nav-list .nav-list-item .nav-list-link.active {
+    color: #000000 !important;   // 👈 black text
+}
+
+// Hover state
+.nav-list .nav-list-item .nav-list-link:hover {
+    color: #000000 !important;   // 👈 black text on hover
 }
