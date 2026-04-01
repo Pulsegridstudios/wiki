@@ -7,7 +7,7 @@ url: https://pulsegridstudios.github.io/wiki
 # 🔗 Top right links
 aux_links:
   PulseGrid Studios: https://pulsegridstudios.github.io
-  Roblox Game: https://www.roblox.com/
+  Roblox Game: https://www.roblox.com/games/103236484372211/Looped-Operation
 
 # 🔍 Search
 search_enabled: true
@@ -35,7 +35,7 @@ back_to_top: true
 back_to_top_text: "Back to top"
 
 # 📄 Footer
-footer_content: "© PulseGrid Studios — Looped Operations Control Systems Documentation"
+footer_content: "© PulseGrid Studios — Looped Operations Documentation"
 
 # 🧪 Extras
 enable_copy_code_button: true
