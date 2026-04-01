@@ -41,16 +41,6 @@ Operators are expected to maintain stable conditions at all times and respond ap
 
 ---
 
-## 🚦 System Status (Example)
-
-| System            | Status |
-|------------------|--------|
-| Reactor Core     | 🟢 ONLINE |
-| Cooling System   | 🟢 STABLE |
-| Turbine Output   | 🟢 NOMINAL |
-| Safety Systems   | 🟢 ACTIVE |
-
----
 
 ## 📚 Getting Started
 
