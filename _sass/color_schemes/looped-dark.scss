@@ -43,7 +43,6 @@ $code-text-color: #00ff9c;
   border-bottom: 2px solid #4da3ff;
   padding-bottom: 4px;
   text-shadow: 0 0 6px rgba(77, 163, 255, 0.4);
-  background: linear-gradient(90deg, rgba(77,163,255,0.12), transparent);
   padding: 6px 10px;
   border-radius: 4px;
 }
@@ -112,14 +111,7 @@ h1, h2, h3 {
   color: #ffffff !important;
 }
 
-// ==============================
-// 🖼️ LOGO SIZE
-// ==============================
 
-.site-logo {
-  max-height: 90px;
-  width: auto;
-}
 
 // ==============================
 // 🧾 SITE TITLE 
