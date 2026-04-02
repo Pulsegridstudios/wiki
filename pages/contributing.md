@@ -1,7 +1,6 @@
 ---
 layout: wiki
-nav_group: general
-nav_order: 2
+nav_order: 99
 permalink: /pages/contributing/
 title: Contributing to the wiki 
 ---
