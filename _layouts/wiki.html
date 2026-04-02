@@ -734,11 +734,64 @@ if (pageLoader) {
     }, 1000);
   }
 }
+const cookieBanner = document.getElementById("cookie-banner");
+const cookieAccept = document.getElementById("cookie-accept");
+const cookieDecline = document.getElementById("cookie-decline");
+
+if (cookieBanner) {
+  const cookieChoice = localStorage.getItem("wiki-cookie-choice");
+
+  if (!cookieChoice) {
+    setTimeout(() => {
+      cookieBanner.hidden = false;
+      requestAnimationFrame(() => {
+        cookieBanner.classList.add("is-visible");
+      });
+    }, 600);
+  }
+
+  function hideCookieBanner() {
+    cookieBanner.classList.remove("is-visible");
+    setTimeout(() => {
+      cookieBanner.hidden = true;
+    }, 250);
+  }
+
+  if (cookieAccept) {
+    cookieAccept.addEventListener("click", () => {
+      localStorage.setItem("wiki-cookie-choice", "accepted");
+      hideCookieBanner();
+    });
+  }
+
+  if (cookieDecline) {
+    cookieDecline.addEventListener("click", () => {
+      localStorage.setItem("wiki-cookie-choice", "dismissed");
+      hideCookieBanner();
+    });
+  }
+}
   }
 
   setupSearch("wiki-search", "search-results");
   setupSearch("wiki-search-mobile", "search-results-mobile");
 });
 </script>
+<div id="cookie-banner" class="cookie-banner" hidden>
+  <div class="cookie-banner-inner">
+    <div class="cookie-banner-text">
+      <strong>Cookie Notice</strong>
+      <p>
+        This site uses essential cookies and local storage for features such as theme preferences and interface settings.
+        <a href="{{ '/legal/privacy-cookies/' | relative_url }}">Learn more</a>.
+      </p>
+    </div>
+
+    <div class="cookie-banner-actions">
+      <button id="cookie-accept" class="cookie-btn cookie-btn-primary" type="button">Accept</button>
+      <button id="cookie-decline" class="cookie-btn cookie-btn-secondary" type="button">Dismiss</button>
+    </div>
+  </div>
+</div>
 </body>
 </html>
