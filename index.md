@@ -10,7 +10,7 @@ nav_group: home
 
 <div class="home-panel notice-panel">
 
- <p>⚠️<strong>Work in Progress</strong> </p>
+ <p><strong>⚠️ Work in Progress</strong> </p>
  <p>This project and its documentation are actively under development. Systems and procedures may evolve over time.</p>
 
 </div>
@@ -19,7 +19,7 @@ nav_group: home
 
   <section class="home-panel">
     <h2>About</h2>
-    <p><strong>Looped Operations</strong> Looped Operations is a high-fidelity simulation of a nuclear power facility, designed to replicate real-world control systems, operator workflows, and plant behaviour within an interactive environment.</p>
+    <p><strong>Looped Operations</strong> is a high-fidelity simulation of a nuclear power facility, designed to replicate real-world control systems, operator workflows, and plant behaviour within an interactive environment.</p>
   </section>
 
   <section class="home-panel">
