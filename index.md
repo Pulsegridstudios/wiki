@@ -6,19 +6,20 @@ nav_group: home
 ---
 
 
+## Operator Notice
+
+<div class="home-panel notice-panel">
+
+> ⚠️ **Work in Progress**  
+> This project and its documentation are actively under development. Systems and procedures may evolve over time.
+
+</div>
+
 <div class="home-grid">
+
   <section class="home-panel">
-    <h2>Operator Notice</h2>
-    <blockquote>
-      ⚠️ <strong>Work in Progress</strong><br>
-      This project and its documentation are actively under development. Systems and procedures may evolve over time.
-    </blockquote>
-  </section>
-  
-  <section class="home-panel home-panel-wide">
     <h2>About</h2>
-    <p><strong>Looped Operations</strong> is a high-fidelity simulation of a nuclear power facility, designed to replicate real-world control systems, operator workflows, and plant behaviour within an interactive environment.</p>
-    <p>The facility is based on a hyper-modern, fictional <strong>Advanced Gas-cooled Reactor (AGR)</strong> design with a thermal output of <strong>3000 MW</strong> and an electrical output of <strong>1500 MW</strong>, supported by an ultra-modern control room built for clear system visibility and precise operator control.</p>
+    <p><strong>Looped Operations</strong> is a high-fidelity simulation of a nuclear power facility...</p>
   </section>
 
   <section class="home-panel">
@@ -27,11 +28,8 @@ nav_group: home
       <li><strong>Reactor Type:</strong> Advanced Gas-cooled Reactor</li>
       <li><strong>Thermal Output:</strong> 3000 MW</li>
       <li><strong>Electrical Output:</strong> 1500 MW</li>
-      <li><strong>Control Room:</strong> Ultra-modern digital interface</li>
     </ul>
   </section>
-
-
 
 </div>
 

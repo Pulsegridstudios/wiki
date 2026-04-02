@@ -743,3 +743,42 @@ html[data-theme="light"] .quick-link-card {
     grid-template-columns: 1fr;
   }
 }
+
+.notice-panel {
+  margin-bottom: 22px;
+  border-left: 4px solid #facc15;
+  background: linear-gradient(
+    to right,
+    rgba(250, 204, 21, 0.12),
+    rgba(250, 204, 21, 0.04)
+  );
+}
+
+/* Dark mode tweak */
+html[data-theme="dark"] .notice-panel {
+  border-left: 4px solid #facc15;
+  background: linear-gradient(
+    to right,
+    rgba(250, 204, 21, 0.15),
+    rgba(250, 204, 21, 0.05)
+  );
+}
+
+/* Light mode tweak */
+html[data-theme="light"] .notice-panel {
+  border-left: 4px solid #d97706;
+  background: linear-gradient(
+    to right,
+    rgba(245, 158, 11, 0.18),
+    rgba(245, 158, 11, 0.06)
+  );
+}
+
+.notice-panel strong {
+  color: var(--heading);
+}
+
+.notice-panel {
+  font-size: 0.95rem;
+  letter-spacing: 0.2px;
+}
