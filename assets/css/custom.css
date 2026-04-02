@@ -525,7 +525,7 @@ html[data-theme="light"] .search-result-snippet mark {
   overflow: hidden;
   margin-bottom: 20px;
 
-  background-image: url('/assets/images/control-room-banner.jpg');
+  background-image: url('wiki/assets/images/control-room-banner.jpg');
   background-size: cover;
   background-position: center;
 }
