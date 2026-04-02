@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% if page.title %}{{ page.title }} | {% endif %}{{ site.title }}</title>
+  <link rel="stylesheet" href="{{ '/assets/css/custom.css' | relative_url }}">
+</head>
+<body>
+  <div class="site-shell">
+    <aside class="sidebar">
+      <div class="sidebar-inner">
+        <a class="site-brand" href="{{ '/' | relative_url }}">
+          {% if site.logo %}
+            <img src="{{ site.logo | relative_url }}" alt="{{ site.title }} logo" class="site-logo">
+          {% endif %}
+          <div class="site-brand-text">
+            <span class="site-title">{{ site.title }}</span>
+            {% if site.description %}
+              <span class="site-tagline">{{ site.description }}</span>
+            {% endif %}
+          </div>
+        </a>
+
+        <nav class="sidebar-nav">
+          <a href="{{ '/' | relative_url }}"{% if page.url == '/' or page.url == '/index.html' %} aria-current="page"{% endif %}>Home</a>
+          <a href="{{ '/pages/control-room-basics/' | relative_url }}"{% if page.url contains '/pages/control-room-basics/' %} aria-current="page"{% endif %}>Control Room Basics</a>
+          <a href="{{ '/pages/startup/' | relative_url }}"{% if page.url contains '/pages/startup/' %} aria-current="page"{% endif %}>Startup Guide</a>
+          <a href="{{ '/pages/scram/' | relative_url }}"{% if page.url contains '/pages/scram/' %} aria-current="page"{% endif %}>SCRAM Guide</a>
+        </nav>
+
+        <div class="sidebar-footer">
+          {% if site.aux_links %}
+            {% for link in site.aux_links %}
+              {% assign link_title = link[0] %}
+              {% assign link_url = link[1] %}
+              <a href="{{ link_url }}" target="_blank" rel="noopener noreferrer">{{ link_title }}</a>
+            {% endfor %}
+          {% endif %}
+        </div>
+      </div>
+    </aside>
+
+    <main class="main-content">
+      <div class="content-wrap">
+        {% if page.title %}
+          <header class="page-header">
+            <h1>{{ page.title }}</h1>
+          </header>
+        {% endif %}
+
+        <article class="page-content">
+          {{ content }}
+        </article>
+      </div>
+    </main>
+  </div>
+</body>
+</html>
