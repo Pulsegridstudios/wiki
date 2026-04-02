@@ -2,6 +2,7 @@
 title: SCRAM Guide
 layout: wiki
 permalink: /pages/scram/
+nav_group: emergency
 ---
 
 ## Overview

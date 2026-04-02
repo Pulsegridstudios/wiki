@@ -2,6 +2,7 @@
 title: Startup Guide
 layout: wiki
 permalink: /pages/startup/
+nav_group: guides
 ---
 
 ## Overview

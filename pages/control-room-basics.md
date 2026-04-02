@@ -2,8 +2,8 @@
 title: Control Room Basics
 layout: wiki
 permalink: /pages/control-room-basics/
+nav_group: general
 ---
-
 ## Overview
 
 The control room is the main operating space for reactor monitoring and plant control. Operators should understand the location and purpose of all primary panels before attempting startup or load changes.

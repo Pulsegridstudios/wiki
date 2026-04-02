@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -7,119 +7,123 @@
   <link rel="stylesheet" href="{{ '/assets/css/custom.css' | relative_url }}">
 </head>
 <body>
-
 <div class="site-shell">
 
-  <!-- SIDEBAR -->
   <aside class="sidebar">
     <div class="sidebar-inner">
 
-      <!-- BRAND -->
       <a class="site-brand" href="{{ '/' | relative_url }}">
         {% if site.logo %}
-          <img src="{{ site.logo | relative_url }}" class="site-logo">
+          <img src="{{ site.logo | relative_url }}" alt="{{ site.title }} logo" class="site-logo">
         {% endif %}
-        <div>
+        <div class="site-brand-text">
           <div class="site-title">{{ site.title }}</div>
           <div class="site-tagline">{{ site.description }}</div>
         </div>
       </a>
 
-      <!-- NAV -->
       <nav class="sidebar-nav">
 
-        <details class="nav-group" open>
-          <summary>General</summary>
-          <div class="nav-group-links">
-            <a href="{{ '/' | relative_url }}" {% if page.url == '/' %}aria-current="page"{% endif %}>Home</a>
-            <a href="{{ '/pages/control-room-basics/' | relative_url }}" {% if page.url contains '/control-room-basics' %}aria-current="page"{% endif %}>Control Room Basics</a>
-          </div>
-        </details>
+        {% if page.nav_group == "general" %}
+          <a class="back-link" href="{{ '/' | relative_url }}">← Back</a>
+          <div class="menu-heading">General</div>
+          <a href="{{ '/pages/control-room-basics/' | relative_url }}"{% if page.url contains '/pages/control-room-basics/' %} aria-current="page"{% endif %}>Control Room Basics</a>
 
-        <details class="nav-group" open>
-          <summary>Guides</summary>
-          <div class="nav-group-links">
-            <a href="{{ '/pages/startup/' | relative_url }}" {% if page.url contains '/startup' %}aria-current="page"{% endif %}>Startup Guide</a>
-          </div>
-        </details>
+        {% elsif page.nav_group == "guides" %}
+          <a class="back-link" href="{{ '/' | relative_url }}">← Back</a>
+          <div class="menu-heading">Guides</div>
+          <a href="{{ '/pages/startup/' | relative_url }}"{% if page.url contains '/pages/startup/' %} aria-current="page"{% endif %}>Startup Guide</a>
 
-        <details class="nav-group" open>
-          <summary>Emergency Procedures</summary>
-          <div class="nav-group-links">
-            <a href="{{ '/pages/scram/' | relative_url }}" {% if page.url contains '/scram' %}aria-current="page"{% endif %}>SCRAM Guide</a>
-          </div>
-        </details>
+        {% elsif page.nav_group == "emergency" %}
+          <a class="back-link" href="{{ '/' | relative_url }}">← Back</a>
+          <div class="menu-heading">Emergency Procedures</div>
+          <a href="{{ '/pages/scram/' | relative_url }}"{% if page.url contains '/pages/scram/' %} aria-current="page"{% endif %}>SCRAM Guide</a>
+
+        {% else %}
+          <div class="menu-heading">Navigation</div>
+
+          <a class="folder-link" href="{{ '/pages/control-room-basics/' | relative_url }}">
+            <span class="folder-icon">📁</span>
+            <span>General</span>
+          </a>
+
+          <a class="folder-link" href="{{ '/pages/startup/' | relative_url }}">
+            <span class="folder-icon">📁</span>
+            <span>Guides</span>
+          </a>
+
+          <a class="folder-link" href="{{ '/pages/scram/' | relative_url }}">
+            <span class="folder-icon">📁</span>
+            <span>Emergency Procedures</span>
+          </a>
+        {% endif %}
 
       </nav>
 
-      <!-- FOOTER -->
       <div class="sidebar-footer">
+        {% if site.aux_links %}
+          {% for link in site.aux_links %}
+            <a href="{{ link[1] }}" target="_blank" rel="noopener noreferrer">{{ link[0] }}</a>
+          {% endfor %}
+        {% endif %}
 
-        {% for link in site.aux_links %}
-          <a href="{{ link[1] }}" target="_blank">{{ link[0] }}</a>
-        {% endfor %}
-
-        <!-- THEME BUTTON -->
-        <button id="theme-toggle" class="theme-toggle">🌙</button>
-
+        <button id="theme-toggle" class="theme-toggle" type="button" aria-label="Toggle theme">☀️</button>
       </div>
 
     </div>
   </aside>
 
-  <!-- MAIN -->
   <main class="main-content">
     <div class="content-wrap">
-
       {% if page.title %}
-      <header class="page-header">
-        <h1>{{ page.title }}</h1>
-      </header>
+        <header class="page-header">
+          <h1>{{ page.title }}</h1>
+        </header>
       {% endif %}
 
       <article class="page-content">
         {{ content }}
       </article>
-
     </div>
   </main>
 
 </div>
 
-<!-- THEME SCRIPT -->
 <script>
 (function () {
-  const saved = localStorage.getItem("theme");
-  if (saved === "light") {
+  const savedTheme = localStorage.getItem("theme");
+  if (savedTheme === "light") {
     document.documentElement.setAttribute("data-theme", "light");
+  } else {
+    document.documentElement.setAttribute("data-theme", "dark");
   }
 })();
 
-document.addEventListener("DOMContentLoaded", () => {
-  const btn = document.getElementById("theme-toggle");
+document.addEventListener("DOMContentLoaded", function () {
+  const button = document.getElementById("theme-toggle");
+  if (!button) return;
 
-  function update() {
-    const light = document.documentElement.getAttribute("data-theme") === "light";
-    btn.textContent = light ? "🌙" : "☀️";
+  function updateButton() {
+    const isLight = document.documentElement.getAttribute("data-theme") === "light";
+    button.textContent = isLight ? "🌙" : "☀️";
   }
 
-  btn.addEventListener("click", () => {
-    const light = document.documentElement.getAttribute("data-theme") === "light";
+  button.addEventListener("click", function () {
+    const isLight = document.documentElement.getAttribute("data-theme") === "light";
 
-    if (light) {
-      document.documentElement.removeAttribute("data-theme");
+    if (isLight) {
+      document.documentElement.setAttribute("data-theme", "dark");
       localStorage.setItem("theme", "dark");
     } else {
       document.documentElement.setAttribute("data-theme", "light");
       localStorage.setItem("theme", "light");
     }
 
-    update();
+    updateButton();
   });
 
-  update();
+  updateButton();
 });
 </script>
-
 </body>
 </html>
