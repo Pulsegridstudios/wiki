@@ -293,10 +293,26 @@
             {% endcase %}
           </span>
         {% endif %}
-        {% if page.title and page.nav_group != "home" %}
-          <span class="breadcrumb-sep">/</span>
-          <span class="breadcrumb-current">{{ page.title }}</span>
-        {% endif %}
+{% assign group_label = page.nav_group | replace: "-", " " | capitalize %}
+
+{% if page.nav_group == "general" %}
+  {% assign group_label = "General" %}
+{% elsif page.nav_group == "guides" %}
+  {% assign group_label = "Guides" %}
+{% elsif page.nav_group == "emergency" %}
+  {% assign group_label = "Emergency Procedures" %}
+{% elsif page.nav_group == "maintenance" %}
+  {% assign group_label = "Maintenance" %}
+{% elsif page.nav_group == "systems" %}
+  {% assign group_label = "Systems" %}
+{% elsif page.nav_group == "reactor" %}
+  {% assign group_label = "Reactor" %}
+{% endif %}
+
+{% if page.title and page.nav_group != "home" and page.title != group_label %}
+  <span class="breadcrumb-sep">/</span>
+  <span class="breadcrumb-current">{{ page.title }}</span>
+{% endif %}
       </nav>
 
       {% if page.title %}
