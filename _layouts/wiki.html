@@ -29,21 +29,23 @@
           <a href="{{ '/pages/scram/' | relative_url }}"{% if page.url contains '/pages/scram/' %} aria-current="page"{% endif %}>SCRAM Guide</a>
         </nav>
 
-        <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Toggle light and dark mode">
-         Toggle theme
-        </button>
 
-        <div class="sidebar-footer">
-          {% if site.aux_links %}
-            {% for link in site.aux_links %}
-              {% assign link_title = link[0] %}
-              {% assign link_url = link[1] %}
-              <a href="{{ link_url }}" target="_blank" rel="noopener noreferrer">{{ link_title }}</a>
-            {% endfor %}
-          {% endif %}
-        </div>
-      </div>
-    </aside>
+<div class="sidebar-footer">
+  {% if site.aux_links %}
+    {% for link in site.aux_links %}
+      {% assign link_title = link[0] %}
+      {% assign link_url = link[1] %}
+      <a href="{{ link_url }}" target="_blank" rel="noopener noreferrer">
+        {{ link_title }}
+      </a>
+    {% endfor %}
+  {% endif %}
+
+  <!-- 🔘 Theme toggle -->
+  <button class="theme-toggle" id="theme-toggle" type="button">
+    🌙
+  </button>
+</div>
 
     <main class="main-content">
       <div class="content-wrap">
@@ -59,7 +61,7 @@
       </div>
     </main>
   </div>
-  <script>
+<script>
   (function () {
     const savedTheme = localStorage.getItem("theme");
     if (savedTheme === "light") {
@@ -69,11 +71,10 @@
 
   document.addEventListener("DOMContentLoaded", function () {
     const button = document.getElementById("theme-toggle");
-    if (!button) return;
 
-    function updateButtonText() {
+    function updateIcon() {
       const isLight = document.documentElement.getAttribute("data-theme") === "light";
-      button.textContent = isLight ? "Dark mode" : "Light mode";
+      button.textContent = isLight ? "🌙" : "☀️";
     }
 
     button.addEventListener("click", function () {
@@ -87,10 +88,10 @@
         localStorage.setItem("theme", "light");
       }
 
-      updateButtonText();
+      updateIcon();
     });
 
-    updateButtonText();
+    updateIcon();
   });
 </script>
 </body>
