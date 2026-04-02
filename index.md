@@ -19,7 +19,7 @@ nav_group: home
 
   <section class="home-panel">
     <h2>About</h2>
-    <p><strong>Looped Operations</strong> is a high-fidelity simulation of a nuclear power facility...</p>
+    <p><strong>Looped Operations</strong> Looped Operations is a high-fidelity simulation of a nuclear power facility, designed to replicate real-world control systems, operator workflows, and plant behaviour within an interactive environment.</p>
   </section>
 
   <section class="home-panel">
