@@ -6,8 +6,8 @@
   <title>{% if page.title %}{{ page.title }} | {% endif %}{{ site.title }}</title>
   <link rel="stylesheet" href="{{ '/assets/css/custom.css' | relative_url }}">
   <link rel="icon" type="image/png" href="{{ '/assets/images/favicon.png' | relative_url }}">
-<link rel="shortcut icon" href="{{ '/assets/images/favicon.ico' | relative_url }}">
-<link rel="apple-touch-icon" href="{{ '/assets/images/favicon.png' | relative_url }}">
+  <link rel="shortcut icon" href="{{ '/assets/images/favicon.ico' | relative_url }}">
+  <link rel="apple-touch-icon" href="{{ '/assets/images/favicon.png' | relative_url }}">
 </head>
 <body>
 <div class="site-shell">
@@ -25,86 +25,98 @@
         </div>
       </a>
 
- <nav class="sidebar-nav">
-  {% assign wiki_pages = site.html_pages | where: "layout", "wiki" | sort: "nav_order" %}
+      <div class="sidebar-search">
+        <input
+          type="search"
+          id="wiki-search"
+          class="search-input"
+          placeholder="Search wiki..."
+          aria-label="Search wiki"
+          autocomplete="off"
+        >
+        <div id="search-results" class="search-results"></div>
+      </div>
 
-  {% if page.nav_group == "general" %}
-    <a class="back-link" href="{{ '/' | relative_url }}">← Back</a>
-    <div class="menu-heading">General</div>
+      <nav class="sidebar-nav">
+        {% assign wiki_pages = site.html_pages | where: "layout", "wiki" | sort: "nav_order" %}
 
-    {% for p in wiki_pages %}
-      {% if p.nav_group == "general" %}
-        <a href="{{ p.url | relative_url }}"{% if page.url == p.url %} aria-current="page"{% endif %}>
-          {{ p.title }}
-        </a>
-      {% endif %}
-    {% endfor %}
+        {% if page.nav_group == "general" %}
+          <a class="back-link" href="{{ '/' | relative_url }}">← Back</a>
+          <div class="menu-heading">General</div>
 
-  {% elsif page.nav_group == "guides" %}
-    <a class="back-link" href="{{ '/' | relative_url }}">← Back</a>
-    <div class="menu-heading">Guides</div>
+          {% for p in wiki_pages %}
+            {% if p.nav_group == "general" %}
+              <a href="{{ p.url | relative_url }}"{% if page.url == p.url %} aria-current="page"{% endif %}>
+                {{ p.title }}
+              </a>
+            {% endif %}
+          {% endfor %}
 
-    {% for p in wiki_pages %}
-      {% if p.nav_group == "guides" %}
-        <a href="{{ p.url | relative_url }}"{% if page.url == p.url %} aria-current="page"{% endif %}>
-          {{ p.title }}
-        </a>
-      {% endif %}
-    {% endfor %}
+        {% elsif page.nav_group == "guides" %}
+          <a class="back-link" href="{{ '/' | relative_url }}">← Back</a>
+          <div class="menu-heading">Guides</div>
 
-  {% elsif page.nav_group == "emergency" %}
-    <a class="back-link" href="{{ '/' | relative_url }}">← Back</a>
-    <div class="menu-heading">Emergency Procedures</div>
+          {% for p in wiki_pages %}
+            {% if p.nav_group == "guides" %}
+              <a href="{{ p.url | relative_url }}"{% if page.url == p.url %} aria-current="page"{% endif %}>
+                {{ p.title }}
+              </a>
+            {% endif %}
+          {% endfor %}
 
-    {% for p in wiki_pages %}
-      {% if p.nav_group == "emergency" %}
-        <a href="{{ p.url | relative_url }}"{% if page.url == p.url %} aria-current="page"{% endif %}>
-          {{ p.title }}
-        </a>
-      {% endif %}
-    {% endfor %}
+        {% elsif page.nav_group == "emergency" %}
+          <a class="back-link" href="{{ '/' | relative_url }}">← Back</a>
+          <div class="menu-heading">Emergency Procedures</div>
 
-  {% else %}
-    <div class="menu-heading">Navigation</div>
+          {% for p in wiki_pages %}
+            {% if p.nav_group == "emergency" %}
+              <a href="{{ p.url | relative_url }}"{% if page.url == p.url %} aria-current="page"{% endif %}>
+                {{ p.title }}
+              </a>
+            {% endif %}
+          {% endfor %}
 
-    {% assign general_first = nil %}
-    {% assign guides_first = nil %}
-    {% assign emergency_first = nil %}
+        {% else %}
+          <div class="menu-heading">Navigation</div>
 
-    {% for p in wiki_pages %}
-      {% if p.nav_group == "general" and general_first == nil %}
-        {% assign general_first = p %}
-      {% endif %}
-      {% if p.nav_group == "guides" and guides_first == nil %}
-        {% assign guides_first = p %}
-      {% endif %}
-      {% if p.nav_group == "emergency" and emergency_first == nil %}
-        {% assign emergency_first = p %}
-      {% endif %}
-    {% endfor %}
+          {% assign general_first = nil %}
+          {% assign guides_first = nil %}
+          {% assign emergency_first = nil %}
 
-    {% if general_first %}
-      <a class="folder-link" href="{{ general_first.url | relative_url }}">
-        <span class="folder-icon">🖥️</span>
-        <span>General</span>
-      </a>
-    {% endif %}
+          {% for p in wiki_pages %}
+            {% if p.nav_group == "general" and general_first == nil %}
+              {% assign general_first = p %}
+            {% endif %}
+            {% if p.nav_group == "guides" and guides_first == nil %}
+              {% assign guides_first = p %}
+            {% endif %}
+            {% if p.nav_group == "emergency" and emergency_first == nil %}
+              {% assign emergency_first = p %}
+            {% endif %}
+          {% endfor %}
 
-    {% if guides_first %}
-      <a class="folder-link" href="{{ guides_first.url | relative_url }}">
-        <span class="folder-icon">⚙️</span>
-        <span>Guides</span>
-      </a>
-    {% endif %}
+          {% if general_first %}
+            <a class="folder-link" href="{{ general_first.url | relative_url }}">
+              <span class="folder-icon">🖥️</span>
+              <span>General</span>
+            </a>
+          {% endif %}
 
-    {% if emergency_first %}
-      <a class="folder-link" href="{{ emergency_first.url | relative_url }}">
-        <span class="folder-icon">🚨</span>
-        <span>Emergency Procedures</span>
-      </a>
-    {% endif %}
-  {% endif %}
-</nav>
+          {% if guides_first %}
+            <a class="folder-link" href="{{ guides_first.url | relative_url }}">
+              <span class="folder-icon">⚙️</span>
+              <span>Guides</span>
+            </a>
+          {% endif %}
+
+          {% if emergency_first %}
+            <a class="folder-link" href="{{ emergency_first.url | relative_url }}">
+              <span class="folder-icon">🚨</span>
+              <span>Emergency Procedures</span>
+            </a>
+          {% endif %}
+        {% endif %}
+      </nav>
 
       <div class="sidebar-footer">
         {% if site.aux_links %}
@@ -147,31 +159,154 @@
 
 document.addEventListener("DOMContentLoaded", function () {
   const button = document.getElementById("theme-toggle");
-  if (!button) return;
 
-  function updateButton() {
-    const isLight = document.documentElement.getAttribute("data-theme") === "light";
-    button.textContent = isLight ? "🌙" : "☀️";
-  }
-
-  button.addEventListener("click", function () {
-    const isLight = document.documentElement.getAttribute("data-theme") === "light";
-
-    if (isLight) {
-      document.documentElement.setAttribute("data-theme", "dark");
-      localStorage.setItem("theme", "dark");
-    } else {
-      document.documentElement.setAttribute("data-theme", "light");
-      localStorage.setItem("theme", "light");
+  if (button) {
+    function updateButton() {
+      const isLight = document.documentElement.getAttribute("data-theme") === "light";
+      button.textContent = isLight ? "🌙" : "☀️";
     }
 
+    button.addEventListener("click", function () {
+      const isLight = document.documentElement.getAttribute("data-theme") === "light";
+
+      if (isLight) {
+        document.documentElement.setAttribute("data-theme", "dark");
+        localStorage.setItem("theme", "dark");
+      } else {
+        document.documentElement.setAttribute("data-theme", "light");
+        localStorage.setItem("theme", "light");
+      }
+
+      updateButton();
+    });
+
     updateButton();
+  }
+
+  const searchInput = document.getElementById("wiki-search");
+  const searchResults = document.getElementById("search-results");
+
+  if (!searchInput || !searchResults) return;
+
+  let pages = [];
+
+  fetch("{{ '/search.json' | relative_url }}")
+    .then(response => response.json())
+    .then(data => {
+      pages = data;
+    })
+    .catch(error => {
+      console.error("Search index failed to load:", error);
+    });
+
+  function escapeHtml(str) {
+    return String(str).replace(/[&<>"']/g, function (m) {
+      return ({
+        '&': '&amp;',
+        '<': '&lt;',
+        '>': '&gt;',
+        '"': '&quot;',
+        "'": '&#39;'
+      })[m];
+    });
+  }
+
+  function prettifyGroup(group) {
+    if (group === "general") return "General";
+    if (group === "guides") return "Guides";
+    if (group === "emergency") return "Emergency Procedures";
+    return "Page";
+  }
+
+  function scorePage(page, query) {
+    const q = query.toLowerCase();
+    const title = (page.title || "").toLowerCase();
+    const content = (page.content || "").toLowerCase();
+
+    let score = 0;
+
+    if (title.includes(q)) score += 100;
+    if (content.includes(q)) score += 25;
+
+    const words = q.split(/\s+/).filter(Boolean);
+    for (const word of words) {
+      if (title.includes(word)) score += 20;
+      if (content.includes(word)) score += 5;
+    }
+
+    return score;
+  }
+
+  function makeSnippet(content, query) {
+    const text = content || "";
+    const lowerText = text.toLowerCase();
+    const lowerQuery = query.toLowerCase();
+    const index = lowerText.indexOf(lowerQuery);
+
+    if (index === -1) {
+      return text.slice(0, 120) + (text.length > 120 ? "..." : "");
+    }
+
+    const start = Math.max(0, index - 40);
+    const end = Math.min(text.length, index + 80);
+    let snippet = text.slice(start, end);
+
+    if (start > 0) snippet = "..." + snippet;
+    if (end < text.length) snippet = snippet + "...";
+
+    return snippet;
+  }
+
+  function renderResults(matches, query) {
+    if (!matches.length) {
+      searchResults.innerHTML = '<div class="search-empty">No results found</div>';
+      searchResults.classList.add("is-open");
+      return;
+    }
+
+    searchResults.innerHTML = matches.slice(0, 8).map(page => {
+      const snippet = escapeHtml(makeSnippet(page.content, query));
+      return `
+        <a class="search-result-item" href="${page.url}">
+          <span class="search-result-title">${escapeHtml(page.title)}</span>
+          <span class="search-result-meta">${escapeHtml(prettifyGroup(page.nav_group))}</span>
+          <span class="search-result-snippet">${snippet}</span>
+        </a>
+      `;
+    }).join("");
+
+    searchResults.classList.add("is-open");
+  }
+
+  searchInput.addEventListener("input", function () {
+    const query = searchInput.value.trim();
+
+    if (!query) {
+      searchResults.innerHTML = "";
+      searchResults.classList.remove("is-open");
+      return;
+    }
+
+    const matches = pages
+      .map(page => ({ ...page, _score: scorePage(page, query) }))
+      .filter(page => page._score > 0)
+      .sort((a, b) => b._score - a._score);
+
+    renderResults(matches, query);
   });
 
-  updateButton();
+  searchInput.addEventListener("focus", function () {
+    if (searchResults.innerHTML.trim()) {
+      searchResults.classList.add("is-open");
+    }
+  });
+
+  document.addEventListener("click", function (event) {
+    if (!event.target.closest(".sidebar-search")) {
+      searchResults.classList.remove("is-open");
+    }
+  });
 });
 </script>
 </body>
 </html>
-
-
