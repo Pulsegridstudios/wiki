@@ -744,6 +744,12 @@ html[data-theme="light"] .quick-link-card {
 
 /* Mobile */
 @media (max-width: 900px) {
+  .hero-overlay {
+    padding: 18px 16px;
+  }
+}
+
+@media (max-width: 900px) {
   html,
   body {
     height: auto;
@@ -881,17 +887,26 @@ html[data-theme="light"] .quick-link-card {
     margin-right: -16px;
   }
 
-  .hero-overlay {
-    padding: 18px 16px;
-  }
+.hero-overlay {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: var(--content-width);
+  margin: 0 auto;
+  padding: 28px 48px;
+}
 
-  .hero-overlay h1 {
-    font-size: 1.5rem;
-  }
+.hero-overlay h1 {
+  font-size: 2.2rem;
+  font-weight: 800;
+  margin: 0;
+}
 
-  .hero-overlay p {
-    font-size: 0.95rem;
-  }
+.hero-overlay p {
+  margin-top: 8px;
+  font-size: 1.05rem;
+  opacity: 0.9;
+}
 
   .notice-panel {
     padding: 16px;
@@ -921,3 +936,35 @@ html[data-theme="light"] .quick-link-card {
     min-height: auto;
   }
 }
+
+/* Fade-in animation */
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Apply to hero text */
+.hero-overlay {
+  animation: fadeUp 0.8s ease forwards;
+}
+
+/* Apply to main content */
+.page-content {
+  animation: fadeUp 0.6s ease forwards;
+}
+
+/* Stagger effect for cards */
+.home-panel {
+  opacity: 0;
+  animation: fadeUp 0.6s ease forwards;
+}
+
+.home-panel:nth-child(1) { animation-delay: 0.1s; }
+.home-panel:nth-child(2) { animation-delay: 0.2s; }
+.home-panel:nth-child(3) { animation-delay: 0.3s; }
