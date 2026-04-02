@@ -37,72 +37,80 @@
         <div id="search-results" class="search-results"></div>
       </div>
 
-      <nav class="sidebar-nav">
-        {% assign wiki_pages = site.html_pages | where: "layout", "wiki" %}
-        {% assign groups = wiki_pages | map: "nav_group" | uniq | where_exp: "g", "g != nil and g != '' and g != 'home'" %}
-        {% if page.nav_group and page.nav_group != "home" %}
+<nav class="sidebar-nav">
+  {% assign wiki_pages = site.html_pages | where: "layout", "wiki" %}
+  {% assign groups = wiki_pages | map: "nav_group" | uniq %}
 
-          <a class="back-link" href="{{ '/' | relative_url }}">← Back</a>
+  {% if page.nav_group and page.nav_group != "home" %}
 
-          <div class="menu-heading">
-            {% case page.nav_group %}
-              {% when "general" %}General
-              {% when "guides" %}Guides
-              {% when "emergency" %}Emergency Procedures
-              {% else %}{{ page.nav_group | replace: "-", " " | capitalize }}
-            {% endcase %}
-          </div>
+    <a class="back-link" href="{{ '/' | relative_url }}">← Back</a>
 
-          {% assign group_pages = wiki_pages | where: "nav_group", page.nav_group | sort: "nav_order" %}
+    <div class="menu-heading">
+      {% case page.nav_group %}
+        {% when "general" %}General
+        {% when "guides" %}Guides
+        {% when "emergency" %}Emergency Procedures
+        {% when "maintenance" %}Maintenance
+        {% when "systems" %}Systems
+        {% when "reactor" %}Reactor
+        {% else %}{{ page.nav_group | replace: "-", " " | capitalize }}
+      {% endcase %}
+    </div>
 
-          {% for p in group_pages %}
-            <a href="{{ p.url | relative_url }}"{% if page.url == p.url %} aria-current="page"{% endif %}>
-              {{ p.title }}
-            </a>
-          {% endfor %}
+    {% assign group_pages = wiki_pages | where: "nav_group", page.nav_group | sort: "nav_order" %}
 
-        {% else %}
+    {% for p in group_pages %}
+      <a href="{{ p.url | relative_url }}"{% if page.url == p.url %} aria-current="page"{% endif %}>
+        {{ p.title }}
+      </a>
+    {% endfor %}
 
-          <a href="{{ '/' | relative_url }}" class="folder-link"{% if page.url == "/" or page.url == "/index.html" %} aria-current="page"{% endif %}>
-            <span class="folder-icon">🏠</span>
-            <span>Home</span>
+  {% else %}
+
+    <a href="{{ '/' | relative_url }}" class="folder-link"{% if page.url == "/" or page.url == "/index.html" %} aria-current="page"{% endif %}>
+      <span class="folder-icon">🏠</span>
+      <span>Home</span>
+    </a>
+
+    <div class="menu-heading">Navigation</div>
+
+    {% for group in groups %}
+      {% if group and group != "home" %}
+
+        {% assign first_page = wiki_pages | where: "nav_group", group | sort: "nav_order" | first %}
+
+        {% if first_page %}
+          <a class="folder-link" href="{{ first_page.url | relative_url }}">
+            <span class="folder-icon">
+              {% case group %}
+                {% when "general" %}🖥️
+                {% when "guides" %}⚙️
+                {% when "emergency" %}🚨
+                {% when "maintenance" %}🛠️
+                {% when "systems" %}🔧
+                {% when "reactor" %}☢️
+                {% else %}📁
+              {% endcase %}
+            </span>
+            <span>
+              {% case group %}
+                {% when "general" %}General
+                {% when "guides" %}Guides
+                {% when "emergency" %}Emergency Procedures
+                {% when "maintenance" %}Maintenance
+                {% when "systems" %}Systems
+                {% when "reactor" %}Reactor
+                {% else %}{{ group | replace: "-", " " | capitalize }}
+              {% endcase %}
+            </span>
           </a>
-
-          <div class="menu-heading">Navigation</div>
-
-          {% for group in groups %}
-            {% assign first_page = wiki_pages | where: "nav_group", group | sort: "nav_order" | first %}
-
-            {% if first_page %}
-              <a class="folder-link" href="{{ first_page.url | relative_url }}">
-                <span class="folder-icon">
-                  {% case group %}
-                    {% when "general" %}🖥️
-                    {% when "guides" %}⚙️
-                    {% when "emergency" %}🚨
-                    {% when "maintenance" %}🛠️
-                    {% when "systems" %}🔧
-                    {% when "reactor" %}☢️
-                    {% else %}📁
-                  {% endcase %}
-                </span>
-                <span>
-                  {% case group %}
-                    {% when "general" %}General
-                    {% when "guides" %}Guides
-                    {% when "emergency" %}Emergency Procedures
-                    {% when "maintenance" %}Maintenance
-                    {% when "systems" %}Systems
-                    {% when "reactor" %}Reactor
-                    {% else %}{{ group | replace: "-", " " | capitalize }}
-                  {% endcase %}
-                </span>
-              </a>
-            {% endif %}
-          {% endfor %}
-
         {% endif %}
-      </nav>
+
+      {% endif %}
+    {% endfor %}
+
+  {% endif %}
+</nav>
 
       <div class="sidebar-footer">
         {% if site.aux_links %}
