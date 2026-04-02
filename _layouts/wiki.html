@@ -39,7 +39,7 @@
 
       <nav class="sidebar-nav">
         {% assign wiki_pages = site.html_pages | where: "layout", "wiki" %}
-        {% assign groups = wiki_pages | map: "nav_group" | uniq | where_exp: "g", "g != nil and g != '' and g != 'home'" %}
+        {% assign groups = wiki_pages | map: "nav_group" | uniq | where_exp: "g", "g != nil and g != empty and g != 'home'" %}
 
         {% if page.nav_group and page.nav_group != "home" %}
 
