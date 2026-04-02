@@ -707,25 +707,32 @@ document.addEventListener("DOMContentLoaded", function () {
     const pageLoader = document.getElementById("page-loader");
 
 if (pageLoader) {
-  let pageLoaded = false;
-  let minTimePassed = false;
+  const hasLoaded = sessionStorage.getItem("wiki-loaded");
 
-  function tryHideLoader() {
-    if (pageLoaded && minTimePassed) {
-      pageLoader.classList.add("is-hidden");
+  if (hasLoaded === "true") {
+    pageLoader.style.display = "none";
+  } else {
+    let pageLoaded = false;
+    let minTimePassed = false;
+
+    function tryHideLoader() {
+      if (pageLoaded && minTimePassed) {
+        pageLoader.classList.add("is-hidden");
+
+        sessionStorage.setItem("wiki-loaded", "true");
+      }
     }
+
+    window.addEventListener("load", () => {
+      pageLoaded = true;
+      tryHideLoader();
+    });
+
+    setTimeout(() => {
+      minTimePassed = true;
+      tryHideLoader();
+    }, 1000);
   }
-
-  window.addEventListener("load", () => {
-    pageLoaded = true;
-    tryHideLoader();
-  });
-
-  // Force minimum display time (1 second)
-  setTimeout(() => {
-    minTimePassed = true;
-    tryHideLoader();
-  }, 1000);
 }
   }
 
