@@ -6,6 +6,7 @@ title: Contributing to the wiki
 hero_image: /assets/images/control-room-banner.jpg
 hero_title: Contributing to the wiki
 hero_subtitle: Guide on how to add pages to the wiki 
+status: reviewed
 ---
 
 

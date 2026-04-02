@@ -4,6 +4,7 @@ layout: wiki
 permalink: /pages/startup/
 nav_group: guides
 nav_order: 2
+status: reviewed
 ---
 
 ## Overview

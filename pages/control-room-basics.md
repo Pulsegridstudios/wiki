@@ -4,6 +4,7 @@ layout: wiki
 permalink: /pages/control-room-basics/
 nav_group: general
 nav_order: 2
+status: reviewed
 ---
 ## Overview
 

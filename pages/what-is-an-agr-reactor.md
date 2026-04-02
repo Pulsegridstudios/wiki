@@ -8,6 +8,7 @@ hero_image: /assets/images/reactor.jpg
 hero_title: What is an AGR Reactor?
 hero_subtitle: Advanced Gas-cooled Reactor Explained
 status: compleate
+status: reviewed
 ---
 ## Overview
 

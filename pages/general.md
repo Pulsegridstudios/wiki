@@ -8,6 +8,7 @@ nav_hidden: true
 hero_image: /assets/images/general.jpg
 hero_title: General
 hero_subtitle: Core information, reactor concepts, and control room reference
+status: reviewed
 ---
 
 ## Overview

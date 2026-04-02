@@ -8,6 +8,7 @@ nav_hidden: true
 hero_image: /assets/images/guides.jpg
 hero_title: Guides
 hero_subtitle: Operating procedures, workflow references, and step-by-step instructions
+status: reviewed
 ---
 
 ## Overview

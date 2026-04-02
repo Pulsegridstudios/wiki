@@ -8,6 +8,7 @@ nav_hidden: true
 hero_image: /assets/images/emergency.jpg
 hero_title: Emergency Procedures
 hero_subtitle: Abnormal conditions, shutdown actions, and operator response guidance
+status: reviewed
 ---
 
 ## Overview
