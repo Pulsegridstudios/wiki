@@ -40,9 +40,13 @@ The Systems section is designed to help operators and contributors understand:
 
 ## Table of Contents
 
-_No systems pages have been added yet._
+## Table of Contents
 
-
+- [Gas Circulation System](/pages/gas-circulation/)
+- [Feedwater System](/pages/feedwater/)
+- [Boiler System](/pages/boilers/)
+- [Electrical System](/pages/electrical-system/)
+- [Reactor Protection System](/pages/reactor-protection-system/)
 
 ---
 
