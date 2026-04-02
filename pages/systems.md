@@ -42,11 +42,11 @@ The Systems section is designed to help operators and contributors understand:
 
 ## Table of Contents
 
-- [Gas Circulation System](/pages/gas-circulation/)
-- [Feedwater System](/pages/feedwater/)
-- [Boiler System](/pages/boilers/)
-- [Electrical System](/pages/electrical-system/)
-- [Reactor Protection System](/pages/reactor-protection-system/)
+- [Gas Circulation System](/wiki/pages/gas-circulation/)
+- [Feedwater System](w/iki/pages/feedwater/)
+- [Boiler System](/wiki/pages/boilers/)
+- [Electrical System](/wiki/pages/electrical-system/)
+- [Reactor Protection System](/wiki/pages/reactor-protection-system/)
 
 ---
 
