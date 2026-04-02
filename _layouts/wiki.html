@@ -125,8 +125,18 @@
     </div>
   </aside>
 
-  <main class="main-content">
-    <div class="content-wrap">
+<main class="main-content">
+
+  {% if page.url == "/" %}
+    <div class="hero-banner" style="background-image: url('{{ "/assets/images/control-room-banner.jpg" | relative_url }}');">
+      <div class="hero-overlay">
+        <h1>Looped Operations</h1>
+        <p>Advanced Gas-cooled Reactor Simulation</p>
+      </div>
+    </div>
+  {% endif %}
+
+  <div class="content-wrap">
 
       <nav class="breadcrumbs" aria-label="Breadcrumb">
         <a href="{{ '/' | relative_url }}">Home</a>

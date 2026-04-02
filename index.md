@@ -13,7 +13,6 @@ nav_group: home
 </div>
 
 
-🏭 Looped Operations
 
 🔍 About
 
