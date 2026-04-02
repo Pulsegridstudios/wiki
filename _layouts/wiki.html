@@ -7,92 +7,119 @@
   <link rel="stylesheet" href="{{ '/assets/css/custom.css' | relative_url }}">
 </head>
 <body>
-  <div class="site-shell">
-    <aside class="sidebar">
-      <div class="sidebar-inner">
-        <a class="site-brand" href="{{ '/' | relative_url }}">
-          {% if site.logo %}
-            <img src="{{ site.logo | relative_url }}" alt="{{ site.title }} logo" class="site-logo">
-          {% endif %}
-          <div class="site-brand-text">
-            <span class="site-title">{{ site.title }}</span>
-            {% if site.description %}
-              <span class="site-tagline">{{ site.description }}</span>
-            {% endif %}
-          </div>
-        </a>
 
-        <nav class="sidebar-nav">
-          <a href="{{ '/' | relative_url }}"{% if page.url == '/' or page.url == '/index.html' %} aria-current="page"{% endif %}>Home</a>
-          <a href="{{ '/pages/control-room-basics/' | relative_url }}"{% if page.url contains '/pages/control-room-basics/' %} aria-current="page"{% endif %}>Control Room Basics</a>
-          <a href="{{ '/pages/startup/' | relative_url }}"{% if page.url contains '/pages/startup/' %} aria-current="page"{% endif %}>Startup Guide</a>
-          <a href="{{ '/pages/scram/' | relative_url }}"{% if page.url contains '/pages/scram/' %} aria-current="page"{% endif %}>SCRAM Guide</a>
-        </nav>
+<div class="site-shell">
 
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="sidebar-inner">
 
-<div class="sidebar-footer">
-  {% if site.aux_links %}
-    {% for link in site.aux_links %}
-      {% assign link_title = link[0] %}
-      {% assign link_url = link[1] %}
-      <a href="{{ link_url }}" target="_blank" rel="noopener noreferrer">
-        {{ link_title }}
+      <!-- BRAND -->
+      <a class="site-brand" href="{{ '/' | relative_url }}">
+        {% if site.logo %}
+          <img src="{{ site.logo | relative_url }}" class="site-logo">
+        {% endif %}
+        <div>
+          <div class="site-title">{{ site.title }}</div>
+          <div class="site-tagline">{{ site.description }}</div>
+        </div>
       </a>
-    {% endfor %}
-  {% endif %}
 
-  <!-- 🔘 Theme toggle -->
-  <button class="theme-toggle" id="theme-toggle" type="button">
-    🌙
-  </button>
+      <!-- NAV -->
+      <nav class="sidebar-nav">
+
+        <details class="nav-group" open>
+          <summary>General</summary>
+          <div class="nav-group-links">
+            <a href="{{ '/' | relative_url }}" {% if page.url == '/' %}aria-current="page"{% endif %}>Home</a>
+            <a href="{{ '/pages/control-room-basics/' | relative_url }}" {% if page.url contains '/control-room-basics' %}aria-current="page"{% endif %}>Control Room Basics</a>
+          </div>
+        </details>
+
+        <details class="nav-group" open>
+          <summary>Guides</summary>
+          <div class="nav-group-links">
+            <a href="{{ '/pages/startup/' | relative_url }}" {% if page.url contains '/startup' %}aria-current="page"{% endif %}>Startup Guide</a>
+          </div>
+        </details>
+
+        <details class="nav-group" open>
+          <summary>Emergency Procedures</summary>
+          <div class="nav-group-links">
+            <a href="{{ '/pages/scram/' | relative_url }}" {% if page.url contains '/scram' %}aria-current="page"{% endif %}>SCRAM Guide</a>
+          </div>
+        </details>
+
+      </nav>
+
+      <!-- FOOTER -->
+      <div class="sidebar-footer">
+
+        {% for link in site.aux_links %}
+          <a href="{{ link[1] }}" target="_blank">{{ link[0] }}</a>
+        {% endfor %}
+
+        <!-- THEME BUTTON -->
+        <button id="theme-toggle" class="theme-toggle">🌙</button>
+
+      </div>
+
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="main-content">
+    <div class="content-wrap">
+
+      {% if page.title %}
+      <header class="page-header">
+        <h1>{{ page.title }}</h1>
+      </header>
+      {% endif %}
+
+      <article class="page-content">
+        {{ content }}
+      </article>
+
+    </div>
+  </main>
+
 </div>
 
-    <main class="main-content">
-      <div class="content-wrap">
-        {% if page.title %}
-          <header class="page-header">
-            <h1>{{ page.title }}</h1>
-          </header>
-        {% endif %}
-
-        <article class="page-content">
-          {{ content }}
-        </article>
-      </div>
-    </main>
-  </div>
+<!-- THEME SCRIPT -->
 <script>
-  (function () {
-    const savedTheme = localStorage.getItem("theme");
-    if (savedTheme === "light") {
+(function () {
+  const saved = localStorage.getItem("theme");
+  if (saved === "light") {
+    document.documentElement.setAttribute("data-theme", "light");
+  }
+})();
+
+document.addEventListener("DOMContentLoaded", () => {
+  const btn = document.getElementById("theme-toggle");
+
+  function update() {
+    const light = document.documentElement.getAttribute("data-theme") === "light";
+    btn.textContent = light ? "🌙" : "☀️";
+  }
+
+  btn.addEventListener("click", () => {
+    const light = document.documentElement.getAttribute("data-theme") === "light";
+
+    if (light) {
+      document.documentElement.removeAttribute("data-theme");
+      localStorage.setItem("theme", "dark");
+    } else {
       document.documentElement.setAttribute("data-theme", "light");
-    }
-  })();
-
-  document.addEventListener("DOMContentLoaded", function () {
-    const button = document.getElementById("theme-toggle");
-
-    function updateIcon() {
-      const isLight = document.documentElement.getAttribute("data-theme") === "light";
-      button.textContent = isLight ? "🌙" : "☀️";
+      localStorage.setItem("theme", "light");
     }
 
-    button.addEventListener("click", function () {
-      const isLight = document.documentElement.getAttribute("data-theme") === "light";
-
-      if (isLight) {
-        document.documentElement.removeAttribute("data-theme");
-        localStorage.setItem("theme", "dark");
-      } else {
-        document.documentElement.setAttribute("data-theme", "light");
-        localStorage.setItem("theme", "light");
-      }
-
-      updateIcon();
-    });
-
-    updateIcon();
+    update();
   });
+
+  update();
+});
 </script>
+
 </body>
 </html>
