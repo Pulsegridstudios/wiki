@@ -661,15 +661,37 @@ document.addEventListener("DOMContentLoaded", function () {
   setupSearch("wiki-search-mobile", "search-results-mobile");
 });
 
-function copyCode(button) {
-  const code = button.nextElementSibling.innerText;
-  navigator.clipboard.writeText(code);
+function addCopyButtonsToCodeBlocks() {
+  const blocks = document.querySelectorAll(".page-content pre");
 
-  button.textContent = "Copied!";
-  setTimeout(() => {
+  blocks.forEach((pre) => {
+    if (pre.parentElement.classList.contains("code-block-wrapper")) return;
+
+    const wrapper = document.createElement("div");
+    wrapper.className = "code-block-wrapper";
+
+    const button = document.createElement("button");
+    button.className = "copy-btn";
+    button.type = "button";
     button.textContent = "Copy";
-  }, 1500);
+
+    button.addEventListener("click", () => {
+      const code = pre.innerText;
+      navigator.clipboard.writeText(code);
+
+      button.textContent = "Copied!";
+      setTimeout(() => {
+        button.textContent = "Copy";
+      }, 1500);
+    });
+
+    pre.parentNode.insertBefore(wrapper, pre);
+    wrapper.appendChild(button);
+    wrapper.appendChild(pre);
+  });
 }
+
+addCopyButtonsToCodeBlocks();
 </script>
 </body>
 </html>

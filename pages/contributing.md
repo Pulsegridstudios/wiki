@@ -9,27 +9,28 @@ hero_subtitle: Guide on how to add pages to the wiki
 ---
 
 
+
+# Contributing to the Looped Operations Wiki
+
 ## Overview
 
-The Looped Operations Wiki is designed to be simple to maintain.\
+The Looped Operations Wiki is designed to be simple to maintain.  
 In most cases, contributors only need to create or edit Markdown pages
 inside the `pages` folder.
 
-------------------------------------------------------------------------
+---
 
-## 📄 Full Template (Click to Copy)
+## 📄 Full Template
 
-::: code-block
-`<button class="copy-btn" onclick="copyCode(this)">`{=html}Copy`</button>`{=html}
-```{=html}
-<pre><code>&#45;&#45;&#45;
+```md
+---
 title: Page Title
 layout: wiki
 permalink: /pages/page-title/
 nav_group: general
 nav_order: 1
 status: draft
-&#45;&#45;&#45;
+---
 
 ## Overview
 
@@ -39,23 +40,21 @@ Write a short explanation of what this page covers.
 
 Add your content here.
 
-&gt; ⚠️ **Warning**  
-&gt; Example warning text
+> ⚠️ **Warning**  
+> Example warning text
 
-&gt; ℹ️ **Note**  
-&gt; Example note text
+> ℹ️ **Note**  
+> Example note text
 
-&gt; 💡 **Tip**  
-&gt; Example tip text
+> 💡 **Tip**  
+> Example tip text
 
 ## Related Pages
 
 - [Example Link](/pages/example/)
-</code></pre>
 ```
-:::
 
-------------------------------------------------------------------------
+---
 
 ## ✅ Example Page (Rendered)
 
@@ -67,87 +66,97 @@ This page explains an example system.
 
 Content goes here.
 
-> ⚠️ **Warning**\
+> ⚠️ **Warning**  
 > Do not exceed safe limits
 
-> ℹ️ **Note**\
+> ℹ️ **Note**  
 > This system runs automatically
 
-> 💡 **Tip**\
+> 💡 **Tip**  
 > Monitor trends, not single values
 
-------------------------------------------------------------------------
+---
 
 ## 📁 Where to add pages
 
 Place all pages in:
 
-    /pages/
+```text
+/pages/
+```
 
-------------------------------------------------------------------------
+---
 
 ## 🧭 Navigation Groups
 
 Use one of:
 
--   general\
--   guides\
--   emergency\
--   maintenance\
--   systems\
--   reactor
+- general
+- guides
+- emergency
+- maintenance
+- systems
+- reactor
 
-------------------------------------------------------------------------
+---
 
 ## 🖼️ Adding Images
 
 Place images in:
 
-    /assets/images/
+```text
+/assets/images/
+```
 
 Use them like:
 
-    ![Example](/assets/images/example.png)
+```md
+![Example](/assets/images/example.png)
+```
 
-------------------------------------------------------------------------
+---
 
 ## 🎬 Hero Banner (Optional)
 
 Add to frontmatter:
 
-    hero_image: /assets/images/example.jpg
-    hero_title: Page Title
-    hero_subtitle: Optional subtitle
+```yaml
+hero_image: /assets/images/example.jpg
+hero_title: Page Title
+hero_subtitle: Optional subtitle
+```
 
-------------------------------------------------------------------------
+---
 
 ## ⚙️ Hiding Pages
 
 To hide a page from sidebar:
 
-    nav_hidden: true
+```yaml
+nav_hidden: true
+```
 
-------------------------------------------------------------------------
+---
 
 ## ✍️ Writing Guidelines
 
--   Keep it clear and structured\
--   Use headings and lists\
--   Keep tone professional\
--   Link related pages
+- Keep it clear and structured
+- Use headings and lists
+- Keep tone professional
+- Link related pages
 
-------------------------------------------------------------------------
+---
 
 ## 🚀 Quick Workflow
 
-1.  Create/edit page\
-2.  Add frontmatter\
-3.  Write content\
-4.  Commit + push
+1. Create/edit page
+2. Add frontmatter
+3. Write content
+4. Commit + push
 
-------------------------------------------------------------------------
+---
 
 ## 📌 Final Note
 
-> ℹ️ **Note**\
+> ℹ️ **Note**  
 > Keep pages simple, clear, and consistent.

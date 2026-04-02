@@ -1078,6 +1078,10 @@ html[data-theme="light"] .status-complete {
   margin-bottom: 1rem;
 }
 
+.code-block-wrapper {
+  position: relative;
+}
+
 .copy-btn {
   position: absolute;
   top: 10px;
@@ -1089,6 +1093,7 @@ html[data-theme="light"] .status-complete {
   padding: 6px 10px;
   cursor: pointer;
   z-index: 2;
+  font: inherit;
 }
 
 .copy-btn:hover {
