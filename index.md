@@ -9,8 +9,12 @@ Welcome to the **Looped Operations Wiki**.
 
 This documentation is intended to be a clean and readable reference for reactor systems, operational procedures, control room guidance, and emergency response information.
 
-> ⚠️ **Important**  
-> This wiki is currently under construction. Some pages may be incomplete or subject to change.
+
+<div class="alert alert-warning">
+<strong>⚠️ Warning</strong>
+This wiki is currently under construction. Some pages may be incomplete or subject to change.
+</div>
+
 
 ## Getting Started
 
