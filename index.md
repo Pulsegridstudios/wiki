@@ -1,3 +1,10 @@
+---
+title: Home
+layout: wiki
+permalink: /
+nav_group: home
+---
+
 <div class="hero-banner">
   <div class="hero-overlay">
     <h1>Looped Operations</h1>
@@ -5,12 +12,6 @@
   </div>
 </div>
 
----
-title: Home
-layout: wiki
-permalink: /
-nav_group: home
----
 
 🏭 Looped Operations
 
