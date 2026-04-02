@@ -5,121 +5,79 @@ permalink: /
 nav_group: home
 ---
 
+<div class="hero-banner hero-full"
+     style="background-image: url('{{ "/assets/images/control-room-banner.jpg" | relative_url }}');">
+  <div class="hero-overlay">
+    <h1>Looped Operations</h1>
+    <p>Advanced Gas-cooled Reactor Simulation</p>
+  </div>
+</div>
 
-🔍 About
+<div class="home-grid">
 
-Looped Operations is a high-fidelity simulation of a nuclear power facility, designed to replicate real-world control systems, operator workflows, and plant behaviour within an interactive environment.
+  <section class="home-panel home-panel-wide">
+    <h2>About</h2>
+    <p><strong>Looped Operations</strong> is a high-fidelity simulation of a nuclear power facility, designed to replicate real-world control systems, operator workflows, and plant behaviour within an interactive environment.</p>
+    <p>The facility is based on a hyper-modern, fictional <strong>Advanced Gas-cooled Reactor (AGR)</strong> design with a thermal output of <strong>3000 MW</strong> and an electrical output of <strong>1500 MW</strong>, supported by an ultra-modern control room built for clear system visibility and precise operator control.</p>
+  </section>
 
-The project focuses on delivering:
+  <section class="home-panel">
+    <h2>Facility Overview</h2>
+    <ul>
+      <li><strong>Reactor Type:</strong> Advanced Gas-cooled Reactor</li>
+      <li><strong>Thermal Output:</strong> 3000 MW</li>
+      <li><strong>Electrical Output:</strong> 1500 MW</li>
+      <li><strong>Control Room:</strong> Ultra-modern digital interface</li>
+    </ul>
+  </section>
 
-- ⚙️ Technical realism — systems behave in a logical, interconnected manner
-- 🎛️ Operational depth — hands-on interaction with control systems
-- 🧠 Educational value — understanding cause-and-effect within plant systems
-- 🎮 Engagement — a fully interactive simulation experience
+  <section class="home-panel">
+    <h2>Operator Notice</h2>
+    <blockquote>
+      ⚠️ <strong>Work in Progress</strong><br>
+      This project and its documentation are actively under development. Systems and procedures may evolve over time.
+    </blockquote>
+  </section>
 
----
+</div>
 
-☢️ The Facility
+## Quick Start
 
-The facility is based on a hyper-modern, fictional Advanced Gas-cooled Reactor (AGR) design.
+<div class="quick-links">
 
-The reactor operates at:
+  <a class="quick-link-card" href="{{ '/pages/control-room-basics/' | relative_url }}">
+    <span class="quick-link-icon">🖥️</span>
+    <span class="quick-link-title">Control Room Basics</span>
+    <span class="quick-link-text">Learn the layout, displays, and core operating responsibilities.</span>
+  </a>
 
-- 3000 MW thermal output
-- 1500 MW electrical generation
+  <a class="quick-link-card" href="{{ '/pages/startup/' | relative_url }}">
+    <span class="quick-link-icon">⚙️</span>
+    <span class="quick-link-title">Startup Guide</span>
+    <span class="quick-link-text">Follow the standard startup flow and establish stable operating conditions.</span>
+  </a>
 
-It is supported by an ultra-modern control room, designed to provide clear system visibility, precise control, and rapid operator response.
+  <a class="quick-link-card" href="{{ '/pages/scram/' | relative_url }}">
+    <span class="quick-link-icon">🚨</span>
+    <span class="quick-link-title">SCRAM Guide</span>
+    <span class="quick-link-text">Review emergency shutdown actions and post-trip priorities.</span>
+  </a>
 
-The plant includes:
+</div>
 
-- Reactor core and control rod systems
-- Cooling and feedwater systems
-- Steam and power generation systems
-- Integrated safety and shutdown mechanisms
-
-All systems are interconnected — operator actions directly influence plant behaviour in real time.
-
----
-
-🎛️ Operations
-
-Operators are responsible for maintaining stable and efficient plant conditions through:
-
-- Monitoring reactor parameters
-- Managing power output
-- Controlling coolant and feedwater systems
-- Responding to alarms and system changes
-
-Operation requires attention, precision, and adherence to procedure.
-
-Incorrect or rapid adjustments may result in:
-
-- System instability
-- Automatic protective actions
-- Emergency conditions
-
----
-
-🚨 Safety Philosophy
-
-Looped Operations is built around a core principle:
-
-«“Understand the system before you operate it.”»
-
-Every system provides feedback — including:
-
-- Temperature
-- Pressure
-- Flow rates
-- System alarms
-
-Operators are expected to:
+## Operating Philosophy
 
 - Observe system conditions before acting
-- Follow established procedures
-- Respond appropriately to abnormal states
+- Make gradual, deliberate adjustments
+- Follow procedures carefully
+- Treat abnormal readings seriously
 
----
+> 💡 **Tip**  
+> Stable operation is achieved through gradual adjustments, not rapid changes.
 
-📚 Using This Wiki
+> ⚠️ **Warning**  
+> Ignoring system feedback may lead to unsafe operating conditions.
 
-This wiki provides all documentation required to operate the facility.
+## Final Note
 
-🖥️ General
-
-Overview of systems and control room layout
-
-⚙️ Guides
-
-Step-by-step procedures for normal operation
-
-🚨 Emergency Procedures
-
-Critical actions for abnormal or dangerous conditions
-
----
-
-🧠 Operator Guidance
-
-«💡 Tip
-Stable operation is achieved through gradual adjustments, not rapid changes.»
-
-«⚠️ Warning
-Ignoring system feedback may lead to unsafe operating conditions.»
-
----
-
-🚧 Status
-
-«⚠️ Work in Progress
-This project and its documentation are actively under development.
-Systems and procedures may change as the simulation evolves.»
-
----
-
-👷 Final Note
-
-«“There is no such thing as a small anomaly.”»
-
-Every reading matters. Every action has a consequence.
-Operate carefully.
+> “There is no such thing as a small anomaly.”
