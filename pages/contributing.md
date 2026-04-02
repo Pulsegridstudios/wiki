@@ -21,6 +21,7 @@ inside the `pages` folder.
 ---
 
 ## 📄 Full Template
+<div class="copy-enabled">
 
 ```md
 ---
@@ -55,6 +56,7 @@ Add your content here.
 ```
 
 ---
+</div>
 
 ## ✅ Example Page (Rendered)
 

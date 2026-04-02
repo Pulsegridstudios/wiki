@@ -662,7 +662,7 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 function addCopyButtonsToCodeBlocks() {
-  const blocks = document.querySelectorAll(".page-content pre");
+  const blocks = document.querySelectorAll(".copy-enabled");
 
   blocks.forEach((pre) => {
     if (pre.parentElement.classList.contains("code-block-wrapper")) return;
