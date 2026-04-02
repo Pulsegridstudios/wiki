@@ -5,6 +5,13 @@
   </div>
 </div>
 
+---
+title: Home
+layout: wiki
+permalink: /
+nav_group: home
+---
+
 🏭 Looped Operations
 
 🔍 About
