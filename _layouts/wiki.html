@@ -37,86 +37,58 @@
         <div id="search-results" class="search-results"></div>
       </div>
 
-      <nav class="sidebar-nav">
-        {% assign wiki_pages = site.html_pages | where: "layout", "wiki" | sort: "nav_order" %}
+  <nav class="sidebar-nav">
 
-        {% if page.nav_group == "general" %}
-          <a class="back-link" href="{{ '/' | relative_url }}">← Back</a>
-          <div class="menu-heading">General</div>
+  {% assign wiki_pages = site.html_pages | where: "layout", "wiki" %}
+  {% assign groups = wiki_pages | map: "nav_group" | uniq %}
 
-          {% for p in wiki_pages %}
-            {% if p.nav_group == "general" %}
-              <a href="{{ p.url | relative_url }}"{% if page.url == p.url %} aria-current="page"{% endif %}>
-                {{ p.title }}
-              </a>
-            {% endif %}
-          {% endfor %}
+  {% if page.nav_group and page.nav_group != "home" %}
 
-        {% elsif page.nav_group == "guides" %}
-          <a class="back-link" href="{{ '/' | relative_url }}">← Back</a>
-          <div class="menu-heading">Guides</div>
+    <!-- GROUP VIEW -->
+    <a class="back-link" href="{{ '/' | relative_url }}">← Back</a>
 
-          {% for p in wiki_pages %}
-            {% if p.nav_group == "guides" %}
-              <a href="{{ p.url | relative_url }}"{% if page.url == p.url %} aria-current="page"{% endif %}>
-                {{ p.title }}
-              </a>
-            {% endif %}
-          {% endfor %}
+    <div class="menu-heading">
+      {{ page.nav_group | capitalize }}
+    </div>
 
-        {% elsif page.nav_group == "emergency" %}
-          <a class="back-link" href="{{ '/' | relative_url }}">← Back</a>
-          <div class="menu-heading">Emergency Procedures</div>
+    {% assign group_pages = wiki_pages
+      | where: "nav_group", page.nav_group
+      | sort: "nav_order" %}
 
-          {% for p in wiki_pages %}
-            {% if p.nav_group == "emergency" %}
-              <a href="{{ p.url | relative_url }}"{% if page.url == p.url %} aria-current="page"{% endif %}>
-                {{ p.title }}
-              </a>
-            {% endif %}
-          {% endfor %}
+    {% for p in group_pages %}
+      <a href="{{ p.url | relative_url }}"
+         {% if page.url == p.url %}aria-current="page"{% endif %}>
+        {{ p.title }}
+      </a>
+    {% endfor %}
 
-        {% else %}
-          <div class="menu-heading">Navigation</div>
+  {% else %}
 
-          {% assign general_first = nil %}
-          {% assign guides_first = nil %}
-          {% assign emergency_first = nil %}
+    <!-- ROOT MENU -->
+    <div class="menu-heading">Navigation</div>
 
-          {% for p in wiki_pages %}
-            {% if p.nav_group == "general" and general_first == nil %}
-              {% assign general_first = p %}
-            {% endif %}
-            {% if p.nav_group == "guides" and guides_first == nil %}
-              {% assign guides_first = p %}
-            {% endif %}
-            {% if p.nav_group == "emergency" and emergency_first == nil %}
-              {% assign emergency_first = p %}
-            {% endif %}
-          {% endfor %}
+    {% for group in groups %}
+      {% assign first_page = wiki_pages
+        | where: "nav_group", group
+        | sort: "nav_order"
+        | first %}
 
-          {% if general_first %}
-            <a class="folder-link" href="{{ general_first.url | relative_url }}">
-              <span class="folder-icon">🖥️</span>
-              <span>General</span>
-            </a>
-          {% endif %}
+      {% if first_page %}
+        <a class="folder-link" href="{{ first_page.url | relative_url }}">
+          <span class="folder-icon">
+            {% if group == "general" %}🖥️
+            {% elsif group == "guides" %}⚙️
+            {% elsif group == "emergency" %}🚨
+            {% else %}📁{% endif %}
+          </span>
+          <span>{{ group | capitalize }}</span>
+        </a>
+      {% endif %}
+    {% endfor %}
 
-          {% if guides_first %}
-            <a class="folder-link" href="{{ guides_first.url | relative_url }}">
-              <span class="folder-icon">⚙️</span>
-              <span>Guides</span>
-            </a>
-          {% endif %}
+  {% endif %}
 
-          {% if emergency_first %}
-            <a class="folder-link" href="{{ emergency_first.url | relative_url }}">
-              <span class="folder-icon">🚨</span>
-              <span>Emergency Procedures</span>
-            </a>
-          {% endif %}
-        {% endif %}
-      </nav>
+</nav>
 
       <div class="sidebar-footer">
         {% if site.aux_links %}
