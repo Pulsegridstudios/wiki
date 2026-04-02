@@ -248,8 +248,9 @@
 
         <button id="theme-toggle" class="theme-toggle" type="button" aria-label="Toggle theme">☀️</button>
       </div>
+
       <div class="sidebar-copyright">
-       © {{ site.time | date: "%Y" }} PulseGrid Studios 
+        © {{ site.time | date: "%Y" }} PulseGrid Studios
       </div>
     </div>
   </aside>
@@ -293,47 +294,49 @@
             {% endcase %}
           </span>
         {% endif %}
-{% assign group_label = page.nav_group | replace: "-", " " | capitalize %}
 
-{% if page.nav_group == "general" %}
-  {% assign group_label = "General" %}
-{% elsif page.nav_group == "guides" %}
-  {% assign group_label = "Guides" %}
-{% elsif page.nav_group == "emergency" %}
-  {% assign group_label = "Emergency Procedures" %}
-{% elsif page.nav_group == "maintenance" %}
-  {% assign group_label = "Maintenance" %}
-{% elsif page.nav_group == "systems" %}
-  {% assign group_label = "Systems" %}
-{% elsif page.nav_group == "reactor" %}
-  {% assign group_label = "Reactor" %}
-{% endif %}
+        {% assign group_label = page.nav_group | replace: "-", " " | capitalize %}
 
-{% if page.title and page.nav_group != "home" and page.title != group_label %}
-  <span class="breadcrumb-sep">/</span>
-  <span class="breadcrumb-current">{{ page.title }}</span>
-{% endif %}
+        {% if page.nav_group == "general" %}
+          {% assign group_label = "General" %}
+        {% elsif page.nav_group == "guides" %}
+          {% assign group_label = "Guides" %}
+        {% elsif page.nav_group == "emergency" %}
+          {% assign group_label = "Emergency Procedures" %}
+        {% elsif page.nav_group == "maintenance" %}
+          {% assign group_label = "Maintenance" %}
+        {% elsif page.nav_group == "systems" %}
+          {% assign group_label = "Systems" %}
+        {% elsif page.nav_group == "reactor" %}
+          {% assign group_label = "Reactor" %}
+        {% endif %}
+
+        {% if page.title and page.nav_group != "home" and page.title != group_label %}
+          <span class="breadcrumb-sep">/</span>
+          <span class="breadcrumb-current">{{ page.title }}</span>
+        {% endif %}
       </nav>
 
-{% if page.title %}
-  <header class="page-header">
-    <div class="page-title-row">
-      <h1>{{ page.title }}</h1>
+      {% if page.title %}
+      <header class="page-header">
+        <div class="page-title-row">
+          <h1>{{ page.title }}</h1>
 
-      {% if page.status %}
-        <span class="status-badge status-{{ page.status | downcase }}">
-          {% case page.status | downcase %}
-            {% when "draft" %}Draft
-            {% when "wip" %}Work in Progress
-            {% when "reviewed" %}Reviewed
-            {% when "complete" %}Complete
-            {% else %}{{ page.status }}
-          {% endcase %}
-        </span>
+          {% if page.status %}
+            <span class="status-badge status-{{ page.status | downcase }}">
+              {% case page.status | downcase %}
+                {% when "draft" %}Draft
+                {% when "wip" %}Work in Progress
+                {% when "reviewed" %}Reviewed
+                {% when "complete" %}Complete
+                {% else %}{{ page.status }}
+              {% endcase %}
+            </span>
+          {% endif %}
+        </div>
+      </header>
       {% endif %}
-    </div>
-  </header>
-{% endif %}
+
       <article class="page-content" id="page-content">
         {{ content }}
       </article>
@@ -432,7 +435,40 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 
+  function addCopyButtonsToCodeBlocks() {
+    const isContributingPage = window.location.pathname.includes("/pages/contributing/");
+    if (!isContributingPage) return;
+
+    const firstCodeBlock = document.querySelector(".page-content pre");
+    if (!firstCodeBlock) return;
+
+    if (firstCodeBlock.parentElement.classList.contains("code-block-wrapper")) return;
+
+    const wrapper = document.createElement("div");
+    wrapper.className = "code-block-wrapper";
+
+    const button = document.createElement("button");
+    button.className = "copy-btn";
+    button.type = "button";
+    button.textContent = "Copy";
+
+    button.addEventListener("click", () => {
+      const code = firstCodeBlock.innerText;
+      navigator.clipboard.writeText(code);
+
+      button.textContent = "Copied!";
+      setTimeout(() => {
+        button.textContent = "Copy";
+      }, 1500);
+    });
+
+    firstCodeBlock.parentNode.insertBefore(wrapper, firstCodeBlock);
+    wrapper.appendChild(button);
+    wrapper.appendChild(firstCodeBlock);
+  }
+
   addHeadingAnchors();
+  addCopyButtonsToCodeBlocks();
 
   function setupSearch(inputId, resultsId) {
     const searchInput = document.getElementById(inputId);
@@ -660,54 +696,6 @@ document.addEventListener("DOMContentLoaded", function () {
   setupSearch("wiki-search", "search-results");
   setupSearch("wiki-search-mobile", "search-results-mobile");
 });
-
-function addCopyButtonsToCodeBlocks() {
-  const isContributingPage = window.location.pathname.includes("/pages/contributing/");
-  if (!isContributingPage) return;
-
-  const headings = Array.from(document.querySelectorAll(".page-content h2, .page-content h3"));
-  let templateHeading = null;
-
-  for (const heading of headings) {
-    if (heading.textContent.toLowerCase().includes("full template")) {
-      templateHeading = heading;
-      break;
-    }
-  }
-
-  if (!templateHeading) return;
-
-  let next = templateHeading.nextElementSibling;
-  while (next && next.tagName !== "PRE") {
-    next = next.nextElementSibling;
-  }
-
-  if (!next || next.parentElement.classList.contains("code-block-wrapper")) return;
-
-  const wrapper = document.createElement("div");
-  wrapper.className = "code-block-wrapper";
-
-  const button = document.createElement("button");
-  button.className = "copy-btn";
-  button.type = "button";
-  button.textContent = "Copy";
-
-  button.addEventListener("click", () => {
-    const code = next.innerText;
-    navigator.clipboard.writeText(code);
-
-    button.textContent = "Copied!";
-    setTimeout(() => {
-      button.textContent = "Copy";
-    }, 1500);
-  });
-
-  next.parentNode.insertBefore(wrapper, next);
-  wrapper.appendChild(button);
-  wrapper.appendChild(next);
-}
-
-addCopyButtonsToCodeBlocks();
 </script>
 </body>
 </html>
