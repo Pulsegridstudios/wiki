@@ -706,14 +706,27 @@ document.addEventListener("DOMContentLoaded", function () {
     });
     const pageLoader = document.getElementById("page-loader");
 
-  function hidePageLoader() {
-    if (!pageLoader) return;
-    pageLoader.classList.add("is-hidden");
+if (pageLoader) {
+  let pageLoaded = false;
+  let minTimePassed = false;
+
+  function tryHideLoader() {
+    if (pageLoaded && minTimePassed) {
+      pageLoader.classList.add("is-hidden");
+    }
   }
 
-  window.addEventListener("load", hidePageLoader);
+  window.addEventListener("load", () => {
+    pageLoaded = true;
+    tryHideLoader();
+  });
 
-  setTimeout(hidePageLoader, 900);
+  // Force minimum display time (1 second)
+  setTimeout(() => {
+    minTimePassed = true;
+    tryHideLoader();
+  }, 1000);
+}
   }
 
   setupSearch("wiki-search", "search-results");
