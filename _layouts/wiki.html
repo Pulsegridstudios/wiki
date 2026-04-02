@@ -10,6 +10,19 @@
   <link rel="apple-touch-icon" href="{{ '/assets/images/favicon.png' | relative_url }}">
 </head>
 <body>
+
+  <div id="page-loader" class="page-loader">
+  <div class="loader-inner">
+    {% if site.logo %}
+      <img src="{{ site.logo | relative_url }}" alt="{{ site.title }} logo" class="loader-logo">
+    {% endif %}
+    <div class="loader-title">Looped Operations Wiki</div>
+    <div class="loader-subtitle">Initialising systems...</div>
+    <div class="loader-bar">
+      <div class="loader-bar-fill"></div>
+    </div>
+  </div>
+</div>
 <div class="site-shell">
 
   <!-- Mobile top bar -->
@@ -691,7 +704,16 @@ document.addEventListener("DOMContentLoaded", function () {
         clearSelection();
       }
     });
-    
+    const pageLoader = document.getElementById("page-loader");
+
+  function hidePageLoader() {
+    if (!pageLoader) return;
+    pageLoader.classList.add("is-hidden");
+  }
+
+  window.addEventListener("load", hidePageLoader);
+
+  setTimeout(hidePageLoader, 900);
   }
 
   setupSearch("wiki-search", "search-results");
