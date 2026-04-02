@@ -1,6 +1,8 @@
 📄 Wiki Page Template
 
-Copy this when creating a new page in "/pages/"
+Copy this when creating a new page in "
+
+/pages/"
 
 ---
 

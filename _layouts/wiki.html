@@ -237,16 +237,26 @@
   </aside>
 
   <main class="main-content">
-    {% if page.url == "/" %}
-      <div class="hero-banner hero-full"
-           style="background-image: url('{{ "/assets/images/control-room-banner.jpg" | relative_url }}');">
-        <div class="hero-overlay">
-          <h1>Looped Operations</h1>
-          <p>Advanced Gas-cooled Reactor Simulation</p>
-        </div>
-      </div>
+{% if page.hero_image %}
+<div class="hero-banner hero-full"
+     style="background-image: url('{{ page.hero_image | relative_url }}');">
+  <div class="hero-overlay">
+    <h1>{{ page.hero_title | default: page.title }}</h1>
+    {% if page.hero_subtitle %}
+      <p>{{ page.hero_subtitle }}</p>
     {% endif %}
+  </div>
+</div>
 
+{% elsif page.url == "/" %}
+<div class="hero-banner hero-full"
+     style="background-image: url('{{ "/assets/images/control-room-banner.jpg" | relative_url }}');">
+  <div class="hero-overlay">
+    <h1>Looped Operations</h1>
+    <p>Advanced Gas-cooled Reactor Simulation</p>
+  </div>
+</div>
+{% endif %}
     <div class="content-wrap">
       <nav class="breadcrumbs" aria-label="Breadcrumb">
         <a href="{{ '/' | relative_url }}">Home</a>
