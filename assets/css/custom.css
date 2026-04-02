@@ -1112,17 +1112,6 @@ html[data-theme="light"] .status-complete {
   overflow: hidden;
 }
 
-.reactor-particle {
-  position: absolute;
-  border-radius: 50%;
-  background: radial-gradient(circle, var(--particle-color) 0%, transparent 72%);
-  box-shadow:
-    0 0 8px var(--particle-color),
-    0 0 16px color-mix(in srgb, var(--particle-color) 65%, transparent);
-  transform: translate(-50%, -50%);
-  animation: reactorParticleFloat 1.25s ease-out forwards;
-  opacity: 0.95;
-}
 
 .reactor-particle.ring {
   background: transparent;
@@ -1139,19 +1128,34 @@ html[data-theme="light"] .status-complete {
   background: linear-gradient(to bottom, var(--particle-color), transparent);
 }
 
+.reactor-particle {
+  position: absolute;
+  border-radius: 50%;
+  background: radial-gradient(circle, var(--particle-color) 0%, transparent 72%);
+  box-shadow:
+    0 0 8px var(--particle-color),
+    0 0 16px color-mix(in srgb, var(--particle-color) 65%, transparent);
+  transform: translate(-50%, -50%);
+  animation: reactorParticleFloat 2.4s ease-out forwards;
+  opacity: 0.95;
+}
+
 @keyframes reactorParticleFloat {
   0% {
-    opacity: 0.95;
-    transform: translate(-50%, -50%) scale(0.75);
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.55);
     filter: blur(0px);
   }
-  50% {
-    opacity: 0.9;
+  12% {
+    opacity: 0.95;
+  }
+  55% {
+    opacity: 0.82;
   }
   100% {
     opacity: 0;
-    transform: translate(calc(-50% + var(--tx)), calc(-50% + var(--ty))) scale(1.35);
-    filter: blur(1px);
+    transform: translate(calc(-50% + var(--tx)), calc(-50% + var(--ty))) scale(1.45);
+    filter: blur(1.5px);
   }
 }
 
