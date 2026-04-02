@@ -1136,7 +1136,7 @@ html[data-theme="light"] .status-complete {
     0 0 8px var(--particle-color),
     0 0 16px color-mix(in srgb, var(--particle-color) 65%, transparent);
   transform: translate(-50%, -50%);
-  animation: reactorParticleFloat 2.4s ease-out forwards;
+  animation: reactorParticleFloat 1.3s ease-out forwards;
   opacity: 0.95;
 }
 
