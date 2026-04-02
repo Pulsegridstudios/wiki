@@ -43,14 +43,6 @@ The General section is designed to help operators and readers understand:
 
 ---
 
-## Recommended Reading Order
-
-For new readers, the suggested order is:
-
-1. [What is an AGR Reactor?]({{ '/pages/what-is-an-agr-reactor/' | relative_url }})
-2. [Control Room Basics]({{ '/pages/control-room-basics/' | relative_url }})
-
----
 
 ## Operator Note
 
