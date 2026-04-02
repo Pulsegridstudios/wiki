@@ -440,3 +440,78 @@ a:hover {
     padding: 28px 20px 56px;
   }
 }
+
+.breadcrumbs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  align-items: center;
+  margin-bottom: 18px;
+  color: var(--text-soft);
+  font-size: 0.92rem;
+}
+
+.breadcrumbs a {
+  color: var(--link);
+  text-decoration: none;
+}
+
+.breadcrumbs a:hover {
+  text-decoration: underline;
+}
+
+.breadcrumb-sep {
+  color: var(--text-soft);
+}
+
+.breadcrumb-current {
+  color: var(--heading);
+}
+
+.page-content h2,
+.page-content h3,
+.page-content h4 {
+  position: relative;
+}
+
+.heading-anchor {
+  margin-left: 8px;
+  color: var(--text-soft);
+  opacity: 0;
+  font-weight: 400;
+  text-decoration: none;
+  transition: opacity 0.15s ease, color 0.15s ease;
+}
+
+.page-content h2:hover .heading-anchor,
+.page-content h3:hover .heading-anchor,
+.page-content h4:hover .heading-anchor,
+.heading-anchor:focus {
+  opacity: 1;
+}
+
+.heading-anchor:hover {
+  color: var(--link);
+  text-decoration: none;
+}
+
+.search-result-title mark,
+.search-result-snippet mark {
+  background: rgba(103, 183, 255, 0.22);
+  color: inherit;
+  padding: 0 2px;
+  border-radius: 4px;
+}
+
+html[data-theme="light"] .search-result-title mark,
+html[data-theme="light"] .search-result-snippet mark {
+  background: rgba(21, 101, 192, 0.16);
+}
+
+.search-result-item.is-selected {
+  background: var(--panel-2);
+}
+
+.search-result-item.is-selected .search-result-title {
+  color: var(--heading);
+}
