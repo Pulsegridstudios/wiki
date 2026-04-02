@@ -2,8 +2,8 @@
 layout: wiki
 nav_group: general
 nav_order: 2
-permalink: /pages/example-page/
-title: Example Page
+permalink: /pages/contributing/
+title: Contributing to the wiki 
 ---
 
 # Contributing to the Looped Operations Wiki
