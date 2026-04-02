@@ -662,33 +662,49 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 function addCopyButtonsToCodeBlocks() {
-  const blocks = document.querySelectorAll(".copy-enabled");
+  const isContributingPage = window.location.pathname.includes("/pages/contributing/");
+  if (!isContributingPage) return;
 
-  blocks.forEach((pre) => {
-    if (pre.parentElement.classList.contains("code-block-wrapper")) return;
+  const headings = Array.from(document.querySelectorAll(".page-content h2, .page-content h3"));
+  let templateHeading = null;
 
-    const wrapper = document.createElement("div");
-    wrapper.className = "code-block-wrapper";
+  for (const heading of headings) {
+    if (heading.textContent.toLowerCase().includes("full template")) {
+      templateHeading = heading;
+      break;
+    }
+  }
 
-    const button = document.createElement("button");
-    button.className = "copy-btn";
-    button.type = "button";
-    button.textContent = "Copy";
+  if (!templateHeading) return;
 
-    button.addEventListener("click", () => {
-      const code = pre.innerText;
-      navigator.clipboard.writeText(code);
+  let next = templateHeading.nextElementSibling;
+  while (next && next.tagName !== "PRE") {
+    next = next.nextElementSibling;
+  }
 
-      button.textContent = "Copied!";
-      setTimeout(() => {
-        button.textContent = "Copy";
-      }, 1500);
-    });
+  if (!next || next.parentElement.classList.contains("code-block-wrapper")) return;
 
-    pre.parentNode.insertBefore(wrapper, pre);
-    wrapper.appendChild(button);
-    wrapper.appendChild(pre);
+  const wrapper = document.createElement("div");
+  wrapper.className = "code-block-wrapper";
+
+  const button = document.createElement("button");
+  button.className = "copy-btn";
+  button.type = "button";
+  button.textContent = "Copy";
+
+  button.addEventListener("click", () => {
+    const code = next.innerText;
+    navigator.clipboard.writeText(code);
+
+    button.textContent = "Copied!";
+    setTimeout(() => {
+      button.textContent = "Copy";
+    }, 1500);
   });
+
+  next.parentNode.insertBefore(wrapper, next);
+  wrapper.appendChild(button);
+  wrapper.appendChild(next);
 }
 
 addCopyButtonsToCodeBlocks();
