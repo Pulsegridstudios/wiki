@@ -3,7 +3,7 @@ title: Control Room Basics
 layout: wiki
 permalink: /pages/control-room-basics/
 nav_group: general
-nav_order: 1
+nav_order: 2
 ---
 ## Overview
 

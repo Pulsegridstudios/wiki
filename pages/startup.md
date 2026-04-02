@@ -3,7 +3,7 @@ title: Startup Guide
 layout: wiki
 permalink: /pages/startup/
 nav_group: general
-nav_order: 1
+nav_order: 3
 ---
 
 ## Overview
