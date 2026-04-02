@@ -2,7 +2,7 @@
 title: Test Page
 layout: wiki
 permalink: /pages/test/
-nav_group: Test
+nav_group: test
 nav_order: 1
 ---
 
