@@ -3,12 +3,11 @@ layout: wiki
 nav_order: 99
 permalink: /pages/contributing/
 title: Contributing to the wiki
-hero_image: /assets/images/loopedops.jpg
+hero_image: /assets/images/control-room-banner.jpg
 hero_title: Contributing to the wiki
 hero_subtitle: Guide on how to add pages to the wiki 
 ---
 
-# Contributing to the Looped Operations Wiki
 
 ## Overview
 
@@ -21,22 +20,16 @@ inside the `pages` folder.
 ## 📄 Full Template (Click to Copy)
 
 ::: code-block
+`<button class="copy-btn" onclick="copyCode(this)">`{=html}Copy`</button>`{=html}
 ```{=html}
-<button class="copy-btn" onclick="copyCode(this)">
-```
-Copy
-```{=html}
-</button>
-```
-```{=html}
-<pre><code>
----
+<pre><code>&#45;&#45;&#45;
 title: Page Title
 layout: wiki
 permalink: /pages/page-title/
 nav_group: general
 nav_order: 1
----
+status: draft
+&#45;&#45;&#45;
 
 ## Overview
 
@@ -46,14 +39,14 @@ Write a short explanation of what this page covers.
 
 Add your content here.
 
-> ⚠️ **Warning**  
-> Example warning text
+&gt; ⚠️ **Warning**  
+&gt; Example warning text
 
-> ℹ️ **Note**  
-> Example note text
+&gt; ℹ️ **Note**  
+&gt; Example note text
 
-> 💡 **Tip**  
-> Example tip text
+&gt; 💡 **Tip**  
+&gt; Example tip text
 
 ## Related Pages
 
@@ -64,7 +57,7 @@ Add your content here.
 
 ------------------------------------------------------------------------
 
-## ✅ Example Page
+## ✅ Example Page (Rendered)
 
 ## Overview
 

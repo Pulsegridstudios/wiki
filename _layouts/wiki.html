@@ -666,7 +666,9 @@ function copyCode(button) {
   navigator.clipboard.writeText(code);
 
   button.textContent = "Copied!";
-  setTimeout(() => button.textContent = "Copy", 1500);
+  setTimeout(() => {
+    button.textContent = "Copy";
+  }, 1500);
 }
 </script>
 </body>
