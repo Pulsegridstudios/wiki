@@ -47,7 +47,7 @@
 
       <nav class="mobile-nav">
         {% assign wiki_pages = site.html_pages | where: "layout", "wiki" %}
-        {% assign groups = wiki_pages | map: "nav_group" | uniq %}
+        {% assign groups = "general,guides,emergency,maintenance,systems,reactor" | split: "," %}
 
         {% if page.nav_group and page.nav_group != "home" %}
 
@@ -162,7 +162,7 @@
 
       <nav class="sidebar-nav">
         {% assign wiki_pages = site.html_pages | where: "layout", "wiki" %}
-        {% assign groups = wiki_pages | map: "nav_group" | uniq %}
+        {% assign groups = "general,guides,emergency,maintenance,systems,reactor" | split: "," %}
 
         {% if page.nav_group and page.nav_group != "home" %}
 
