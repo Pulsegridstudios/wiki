@@ -25,43 +25,56 @@
         </div>
       </a>
 
-      <nav class="sidebar-nav">
+ <nav class="sidebar-nav">
 
-        {% if page.nav_group == "general" %}
-          <a class="back-link" href="{{ '/' | relative_url }}">← Back</a>
-          <div class="menu-heading">General</div>
-          <a href="{{ '/pages/control-room-basics/' | relative_url }}"{% if page.url contains '/pages/control-room-basics/' %} aria-current="page"{% endif %}>Control Room Basics</a>
+  {% assign pages_by_group = site.pages | where_exp: "p", "p.nav_group" %}
 
-        {% elsif page.nav_group == "guides" %}
-          <a class="back-link" href="{{ '/' | relative_url }}">← Back</a>
-          <div class="menu-heading">Guides</div>
-          <a href="{{ '/pages/startup/' | relative_url }}"{% if page.url contains '/pages/startup/' %} aria-current="page"{% endif %}>Startup Guide</a>
+  {% assign groups = pages_by_group | map: "nav_group" | uniq %}
 
-        {% elsif page.nav_group == "emergency" %}
-          <a class="back-link" href="{{ '/' | relative_url }}">← Back</a>
-          <div class="menu-heading">Emergency Procedures</div>
-          <a href="{{ '/pages/scram/' | relative_url }}"{% if page.url contains '/pages/scram/' %} aria-current="page"{% endif %}>SCRAM Guide</a>
+  {% for group in groups %}
+    
+    {% assign group_pages = pages_by_group 
+      | where: "nav_group", group 
+      | sort: "nav_order" %}
 
-        {% else %}
-          <div class="menu-heading">Navigation</div>
+    {% if group == page.nav_group %}
+      <!-- ACTIVE GROUP VIEW -->
+      <a class="back-link" href="{{ '/' | relative_url }}">← Back</a>
 
-<a class="folder-link" href="{{ '/pages/control-room-basics/' | relative_url }}">
-  <span class="folder-icon">🖥️</span>
-  <span>General</span>
-</a>
+      <div class="menu-heading">
+        {{ group | capitalize }}
+      </div>
 
-<a class="folder-link" href="{{ '/pages/startup/' | relative_url }}">
-  <span class="folder-icon">⚙️</span>
-  <span>Guides</span>
-</a>
+      {% for p in group_pages %}
+        <a href="{{ p.url | relative_url }}"
+           {% if page.url == p.url %}aria-current="page"{% endif %}>
+          {{ p.title }}
+        </a>
+      {% endfor %}
 
-<a class="folder-link" href="{{ '/pages/scram/' | relative_url }}">
-  <span class="folder-icon">🚨</span>
-  <span>Emergency Procedures</span>
-</a>
-        {% endif %}
+    {% endif %}
 
-      </nav>
+  {% endfor %}
+
+  {% if page.nav_group == nil or page.nav_group == "home" %}
+    <!-- ROOT MENU -->
+    <div class="menu-heading">Navigation</div>
+
+    {% for group in groups %}
+      <a class="folder-link"
+         href="{{ (pages_by_group | where: 'nav_group', group | sort: 'nav_order' | first).url | relative_url }}">
+        <span class="folder-icon">
+          {% if group == "general" %}🖥️
+          {% elsif group == "guides" %}⚙️
+          {% elsif group == "emergency" %}🚨
+          {% else %}📁{% endif %}
+        </span>
+        <span>{{ group | capitalize }}</span>
+      </a>
+    {% endfor %}
+  {% endif %}
+
+</nav>
 
       <div class="sidebar-footer">
         {% if site.aux_links %}

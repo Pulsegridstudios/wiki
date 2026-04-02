@@ -3,6 +3,7 @@ title: SCRAM Guide
 layout: wiki
 permalink: /pages/scram/
 nav_group: emergency
+nav_order: 1
 ---
 
 ## Overview
