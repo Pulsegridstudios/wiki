@@ -5,7 +5,7 @@ permalink: /
 nav_group: home
 ---
 
-<div class="hero-banner">
+<div class="hero-banner" style="background-image: url('{{ "/assets/images/control-room-banner.jpg" | relative_url }}');">
   <div class="hero-overlay">
     <h1>Looped Operations</h1>
     <p>Advanced Gas-cooled Reactor Simulation</p>
