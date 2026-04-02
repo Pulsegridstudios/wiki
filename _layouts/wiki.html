@@ -315,12 +315,25 @@
 {% endif %}
       </nav>
 
-      {% if page.title %}
-        <header class="page-header">
-          <h1>{{ page.title }}</h1>
-        </header>
-      {% endif %}
+{% if page.title %}
+  <header class="page-header">
+    <div class="page-title-row">
+      <h1>{{ page.title }}</h1>
 
+      {% if page.status %}
+        <span class="status-badge status-{{ page.status | downcase }}">
+          {% case page.status | downcase %}
+            {% when "draft" %}Draft
+            {% when "wip" %}Work in Progress
+            {% when "reviewed" %}Reviewed
+            {% when "complete" %}Complete
+            {% else %}{{ page.status }}
+          {% endcase %}
+        </span>
+      {% endif %}
+    </div>
+  </header>
+{% endif %}
       <article class="page-content" id="page-content">
         {{ content }}
       </article>
@@ -647,6 +660,14 @@ document.addEventListener("DOMContentLoaded", function () {
   setupSearch("wiki-search", "search-results");
   setupSearch("wiki-search-mobile", "search-results-mobile");
 });
+
+function copyCode(button) {
+  const code = button.nextElementSibling.innerText;
+  navigator.clipboard.writeText(code);
+
+  button.textContent = "Copied!";
+  setTimeout(() => button.textContent = "Copy", 1500);
+}
 </script>
 </body>
 </html>

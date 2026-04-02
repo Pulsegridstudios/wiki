@@ -2,7 +2,10 @@
 layout: wiki
 nav_order: 99
 permalink: /pages/contributing/
-title: Contributing to the wiki 
+title: Contributing to the wiki
+hero_image: /assets/images/loopedops.jpg
+hero_title: Contributing to the wiki
+hero_subtitle: Guide on how to add pages to the wiki 
 ---
 
 # Contributing to the Looped Operations Wiki
@@ -15,40 +18,53 @@ inside the `pages` folder.
 
 ------------------------------------------------------------------------
 
-## 📄 Full Template (Copy-Paste Safe)
+## 📄 Full Template (Click to Copy)
 
-    ---
-    title: Page Title
-    layout: wiki
-    permalink: /pages/page-title/
-    nav_group: general
-    nav_order: 1
-    ---
+::: code-block
+```{=html}
+<button class="copy-btn" onclick="copyCode(this)">
+```
+Copy
+```{=html}
+</button>
+```
+```{=html}
+<pre><code>
+---
+title: Page Title
+layout: wiki
+permalink: /pages/page-title/
+nav_group: general
+nav_order: 1
+---
 
-    ## Overview
+## Overview
 
-    Write a short explanation of what this page covers.
+Write a short explanation of what this page covers.
 
-    ## Main Section
+## Main Section
 
-    Add your content here.
+Add your content here.
 
-    > ⚠️ **Warning**  
-    > Example warning text
+> ⚠️ **Warning**  
+> Example warning text
 
-    > ℹ️ **Note**  
-    > Example note text
+> ℹ️ **Note**  
+> Example note text
 
-    > 💡 **Tip**  
-    > Example tip text
+> 💡 **Tip**  
+> Example tip text
 
-    ## Related Pages
+## Related Pages
 
-    - [Example Link](/pages/example/)
+- [Example Link](/pages/example/)
+</code></pre>
+```
+:::
 
 ------------------------------------------------------------------------
 
-## ✅ Example Page (Rendered)
+## ✅ Example Page
 
 ## Overview
 
