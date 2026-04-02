@@ -10,7 +10,7 @@ nav_group: home
 
 <div class="home-panel notice-panel">
 
- ⚠️ <p><strong>Work in Progress</strong> </p>
+ <p>⚠️<strong>Work in Progress</strong> </p>
  <p>This project and its documentation are actively under development. Systems and procedures may evolve over time.</p>
 
 </div>
