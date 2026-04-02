@@ -67,9 +67,11 @@
 
           {% assign group_pages = wiki_pages | where: "nav_group", page.nav_group | sort: "nav_order" %}
           {% for p in group_pages %}
-            <a href="{{ p.url | relative_url }}"{% if page.url == p.url %} aria-current="page"{% endif %}>
-              {{ p.title }}
-            </a>
+            {% unless p.nav_hidden %}
+              <a href="{{ p.url | relative_url }}"{% if page.url == p.url %} aria-current="page"{% endif %}>
+                {{ p.title }}
+              </a>
+            {% endunless %}
           {% endfor %}
 
         {% else %}
@@ -83,7 +85,13 @@
 
           {% for group in groups %}
             {% if group and group != "home" %}
-              {% assign first_page = wiki_pages | where: "nav_group", group | sort: "nav_order" | first %}
+              {% assign landing_page = wiki_pages | where: "nav_group", group | where: "nav_hidden", true | first %}
+              {% if landing_page %}
+                {% assign first_page = landing_page %}
+              {% else %}
+                {% assign first_page = wiki_pages | where: "nav_group", group | sort: "nav_order" | first %}
+              {% endif %}
+
               {% if first_page %}
                 <a class="folder-link" href="{{ first_page.url | relative_url }}">
                   <span class="folder-icon">
@@ -174,9 +182,11 @@
 
           {% assign group_pages = wiki_pages | where: "nav_group", page.nav_group | sort: "nav_order" %}
           {% for p in group_pages %}
-            <a href="{{ p.url | relative_url }}"{% if page.url == p.url %} aria-current="page"{% endif %}>
-              {{ p.title }}
-            </a>
+            {% unless p.nav_hidden %}
+              <a href="{{ p.url | relative_url }}"{% if page.url == p.url %} aria-current="page"{% endif %}>
+                {{ p.title }}
+              </a>
+            {% endunless %}
           {% endfor %}
 
         {% else %}
@@ -190,7 +200,13 @@
 
           {% for group in groups %}
             {% if group and group != "home" %}
-              {% assign first_page = wiki_pages | where: "nav_group", group | sort: "nav_order" | first %}
+              {% assign landing_page = wiki_pages | where: "nav_group", group | where: "nav_hidden", true | first %}
+              {% if landing_page %}
+                {% assign first_page = landing_page %}
+              {% else %}
+                {% assign first_page = wiki_pages | where: "nav_group", group | sort: "nav_order" | first %}
+              {% endif %}
+
               {% if first_page %}
                 <a class="folder-link" href="{{ first_page.url | relative_url }}">
                   <span class="folder-icon">
@@ -237,26 +253,27 @@
   </aside>
 
   <main class="main-content">
-{% if page.hero_image %}
-<div class="hero-banner hero-full"
-     style="background-image: url('{{ page.hero_image | relative_url }}');">
-  <div class="hero-overlay">
-    <h1>{{ page.hero_title | default: page.title }}</h1>
-    {% if page.hero_subtitle %}
-      <p>{{ page.hero_subtitle }}</p>
-    {% endif %}
-  </div>
-</div>
+    {% if page.hero_image %}
+    <div class="hero-banner hero-full"
+         style="background-image: url('{{ page.hero_image | relative_url }}');">
+      <div class="hero-overlay">
+        <h1>{{ page.hero_title | default: page.title }}</h1>
+        {% if page.hero_subtitle %}
+          <p>{{ page.hero_subtitle }}</p>
+        {% endif %}
+      </div>
+    </div>
 
-{% elsif page.url == "/" %}
-<div class="hero-banner hero-full"
-     style="background-image: url('{{ "/assets/images/control-room-banner.jpg" | relative_url }}');">
-  <div class="hero-overlay">
-    <h1>Looped Operations</h1>
-    <p>Advanced Gas-cooled Reactor Simulation</p>
-  </div>
-</div>
-{% endif %}
+    {% elsif page.url == "/" %}
+    <div class="hero-banner hero-full"
+         style="background-image: url('{{ "/assets/images/control-room-banner.jpg" | relative_url }}');">
+      <div class="hero-overlay">
+        <h1>Looped Operations</h1>
+        <p>Advanced Gas-cooled Reactor Simulation</p>
+      </div>
+    </div>
+    {% endif %}
+
     <div class="content-wrap">
       <nav class="breadcrumbs" aria-label="Breadcrumb">
         <a href="{{ '/' | relative_url }}">Home</a>
