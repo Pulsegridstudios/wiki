@@ -282,7 +282,6 @@ That means the game draws on real AGR principles, including:
 
 - gas-cooled reactor behaviour
 - graphite-moderated core concepts
-- reactor thermal output and electrical generation
 - control room-based plant operation
 
 However, the simulation may simplify, extend, or fictionalise some systems for gameplay.
